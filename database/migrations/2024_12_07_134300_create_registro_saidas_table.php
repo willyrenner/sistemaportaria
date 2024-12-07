@@ -3,9 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,14 +16,14 @@ return new class extends Migration
             $table->timestamp('saida')->nullable();
             $table->unsignedBigInteger('aluno_id');
             $table->unsignedBigInteger('funcionario_id');
-            $table->string('porteiro_id')->nullable();
+            $table->unsignedBigInteger('porteiro_id')->nullable(); // Permitir valores nulos
             $table->timestamps();
-            
+
+            // Definir as chaves estrangeiras
             $table->foreign('aluno_id')->references('id')->on('alunos')->onDelete('cascade');
             $table->foreign('funcionario_id')->references('id')->on('funcionarios')->onDelete('cascade');
             $table->foreign('porteiro_id')->references('id')->on('porteiros')->onDelete('cascade');
         });
-        
     }
 
     /**
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registro_saidas');
+        Schema::dropIfExists('registros_saidas');
     }
 };

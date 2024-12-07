@@ -20,11 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('responsavel_id');
             $table->unsignedBigInteger('curso_id');
             $table->timestamps();
-        
+
             $table->foreign('responsavel_id')->references('id')->on('responsaveis')->onDelete('cascade');
             $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');
         });
-        
+
     }
 
     /**
