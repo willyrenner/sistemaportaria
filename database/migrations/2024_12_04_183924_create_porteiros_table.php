@@ -12,8 +12,12 @@ return new class extends Migration {
     {
         Schema::create('porteiros', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo', 20)->unique(); // Código único e com limite de caracteres
-            $table->string('nome', 100); // Nome com limite de caracteres
+            $table->string('name', 100); // Nome com limite de caracteres
+            $table->string('email', 100)->unique(); // email com limite de caracteres
+            $table->string('cpf', 20)->unique(); // cpf com limite de caracteres
+            $table->string('matricula', 100)->unique(); // matricula com limite de caracteres
+            $table->string('role'); // permissão do porteiro
+            $table->string('turno'); // turno
             $table->string('password'); // Senha segura
             $table->timestamps();
         });

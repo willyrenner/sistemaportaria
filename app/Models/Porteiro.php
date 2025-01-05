@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Porteiro extends Model
+class Porteiro extends Authenticatable
 {
-    use HasFactory;
+    protected $fillable = [
+        'name', 'email', 'cpf', 'matricula','role', 'turno', 'password',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
 }
+

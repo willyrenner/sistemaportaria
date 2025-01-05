@@ -6,54 +6,64 @@
     <title>
         Portaria
     </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para o logo */
+        #containerLogo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+        /* Personalização para o background */
+        #body {
+            background: linear-gradient(to bottom, #144444 20%, #18746c 100%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-900 min-h-screen flex flex-col">
-    <!-- Navbar -->
-    <header class="bg-gray-800 p-4 shadow-lg">
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="flex items-center">
-                <img alt="Logo" class="h-10 w-10 mr-3" height="40"
-                    src="https://ead.ifrn.edu.br/portal/wp-content/uploads/2019/03/2000px-Logotipo_IFET.svg_-764x1024.png"
-                    width="40" />
-                <span class="text-white text-xl font-semibold">
-                    Portaria - Campus Caicó
-                </span>
-            </div>
+<body id="body" class="flex items-center justify-center min-h-screen">
+
+    <div class="bg-white rounded-lg shadow-lg w-80 p-8">
+        <div id="containerLogo">
+            <img src="https://ead.ifrn.edu.br/portal/wp-content/uploads/2019/03/2000px-Logotipo_IFET.svg_-764x1024.png" alt="Logo IFRN" class="w-24 mb-4" />
+            <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1>
         </div>
-    </header>
-    <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center">
-        <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center w-full max-w-sm mx-4">
-            <h1 class="text-2xl font-semibold text-white mb-2">
-                Seja Bem-Vindo
-            </h1>
-            <p class="text-gray-400 mb-6">
-                Você não está autenticado
-            </p>
-            <a class="block w-full bg-blue-600 text-white py-2 rounded mb-4" href="{{ route('login') }}">
-                Entrar
-            </a>
-            <a class="block w-full bg-green-600 text-white py-2 rounded" id="suap-login-button">
-                Fazer Login Suap
-            </a>
-        </div>
-    </main>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="js/js.cookie.js"></script>
-  		<script src="js/client.js"></script>
-		<script src="js/settings.js"></script>
+
+        <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Seja Bem-Vindo</h1>
+        <p class="text-gray-400 text-center mb-6">Você não está autenticado</p>
+
+        <!-- Botões de ação -->
+        <a class="block w-full bg-blue-600 text-white py-2 rounded mb-4 text-center" href="{{ route('autenticar') }}">
+            Entrar
+        </a>
+        <a class="block w-full bg-green-600 text-white py-2 rounded text-center" id="suap-login-button">
+            Fazer Login Suap
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/js.cookie.js"></script>
+    <script src="js/client.js"></script>
+    <script src="js/settings.js"></script>
     <script>
-      var suap = new SuapClient(
-		SUAP_URL, CLIENT_ID, HOME_URI, REDIRECT_URI, SCOPE
-	  );
-      suap.init();
-      $(document).ready(function () {
-          $("#suap-login-button").attr('href', suap.getLoginURL());
-      });
+        var suap = new SuapClient(
+            SUAP_URL, CLIENT_ID, HOME_URI, REDIRECT_URI, SCOPE
+        );
+        suap.init();
+        $(document).ready(function () {
+            $("#suap-login-button").attr('href', suap.getLoginURL());
+        });
     </script>
+
+</body>
 
 </html>
