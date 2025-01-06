@@ -20,11 +20,11 @@
                             </li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
                             </li>
-                            <li><a href="/alunos/cadastrar" class="text-lg block hover:text-green-400">MENU ALUNO</a>
+                            <li><a href="/alunos" class="text-lg block hover:text-green-400">MENU ALUNO</a>
                             </li>
-                            <li><a href="/cursos/cadastrar" class="text-lg block hover:text-green-400">MENU CURSOS</a>
+                            <li><a href="/cursos" class="text-lg block hover:text-green-400">MENU CURSOS</a>
                             </li>
-                            <li><a href="/responsaveis/cadastrar" class="text-lg block hover:text-green-400">MENU
+                            <li><a href="/responsaveis" class="text-lg block hover:text-green-400">MENU
                                     RESPONSÁVEIS</a>
                             </li>
                         </ul>
