@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PorteiroAuthController;
+use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\ResponsavelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,14 +65,31 @@ Route::prefix('porteiros')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/porteiros', [PorteiroAuthController::class, 'index'])->name('porteiros.index');
-    // Rota para editar um porteiro
+    // ROTAS PORTEIROS
     Route::get('porteiros/{id}/edit', [PorteiroAuthController::class, 'edit'])->name('porteiros.edit');
-
-    // Rota para atualizar um porteiro
     Route::put('porteiros/{id}', [PorteiroAuthController::class, 'update'])->name('porteiros.update');
-
-    // Rota para excluir um porteiro
     Route::delete('porteiros/{id}', [PorteiroAuthController::class, 'destroy'])->name('porteiros.destroy');
+
+    // ROTAS ALUNOS
+    Route::get('/alunos/cadastrar', [AlunoController::class, 'index'])->name('alunos.index'); 
+    Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
+    Route::get('/alunos/{id}/editar', [AlunoController::class, 'edit'])->name('alunos.edit'); 
+    Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update'); 
+    Route::delete('/alunos/{id}', [AlunoController::class, 'destroy'])->name('alunos.destroy'); 
+
+    // ROTA CURSOS
+    Route::get('/cursos/cadastrar', [CursoController::class, 'index'])->name('cursos.index');
+    Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
+    Route::get('/cursos/{id}/editar', [CursoController::class, 'edit'])->name('cursos.edit'); 
+    Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update'); 
+    Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy'); 
+
+    // ROTA RESPONSAVEIS
+    Route::get('/responsaveis/cadastrar', [ResponsavelController::class, 'index'])->name('responsaveis.index');
+    Route::post('/responsaveis', [ResponsavelController::class, 'store'])->name('responsaveis.store');
+    Route::get('/responsaveis/{id}/editar', [ResponsavelController::class, 'edit'])->name('responsaveis.edit'); 
+    Route::put('/responsaveis/{id}', [ResponsavelController::class, 'update'])->name('responsaveis.update'); 
+    Route::delete('/responsaveis/{id}', [ResponsavelController::class, 'destroy'])->name('responsaveis.destroy'); 
 });
 
 require __DIR__ . '/auth.php';

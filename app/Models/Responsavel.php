@@ -9,6 +9,11 @@ class Responsavel extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nome', 'telefone',
+    ];
+    protected $table = 'responsaveis';
+    
     public function alunos()
     {
         return $this->hasMany(Aluno::class);

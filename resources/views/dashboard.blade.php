@@ -18,8 +18,15 @@
                             </li>
                             <li><a href="#" class="text-lg block hover:text-green-400">HISTÓRICO DE SAÍDAS/ENTRADAS</a>
                             </li>
-                            <li><a href="/porteiros" class="text-lg block hover:text-green-400">EDITAR PORTEIROS
-                                    CADASTRADOS</a></li>
+                            <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
+                            </li>
+                            <li><a href="/alunos/cadastrar" class="text-lg block hover:text-green-400">MENU ALUNO</a>
+                            </li>
+                            <li><a href="/cursos/cadastrar" class="text-lg block hover:text-green-400">MENU CURSOS</a>
+                            </li>
+                            <li><a href="/responsaveis/cadastrar" class="text-lg block hover:text-green-400">MENU
+                                    RESPONSÁVEIS</a>
+                            </li>
                         </ul>
                         <input type="text" class="mt-4 w-full px-3 py-2 rounded text-black" placeholder="BUSCAR ALUNO">
                         <button class="w-full mt-3 bg-green-500 px-4 py-2 rounded hover:bg-green-600">BUSCAR</button>
@@ -64,9 +71,6 @@
                                 <!-- Campos Fixos -->
                                 <input type="hidden" name="role" value="porteiro">
 
-
-
-                                <!-- Campo Turnos -->
                                 <!-- Campo Turnos -->
                                 <div>
                                     <h4 class="font-semibold text-lg mb-2">TURNO</h4>
@@ -77,8 +81,6 @@
                                         <option value="noturno">NOTURNO</option>
                                     </select>
                                 </div>
-
-
 
                                 <!-- Botão de Enviar -->
                                 <button type="submit" class="w-full bg-green-500 px-4 py-2 rounded hover:bg-green-600">

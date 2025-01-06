@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('email');
             $table->string('telefone');
+            $table->date('data_nascimento');
             $table->unsignedBigInteger('responsavel_id');
             $table->unsignedBigInteger('curso_id');
             $table->timestamps();
