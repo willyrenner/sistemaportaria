@@ -6,6 +6,7 @@ use App\Http\Controllers\PorteiroAuthController;
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\ResponsavelController;
+use App\Http\Controllers\RegistroSaidaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +47,6 @@ Route::get('/autenticar', function () {
 })->name('autenticar');
 
 
-
 // Logout do porteiro
 Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 Route::get('/porteiro/dashboard', [PorteiroAuthController::class, 'dashboard'])
@@ -71,25 +71,40 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('porteiros/{id}', [PorteiroAuthController::class, 'destroy'])->name('porteiros.destroy');
 
     // ROTAS ALUNOS
-    Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index'); 
+    Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
     Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
-    Route::get('/alunos/{id}/editar', [AlunoController::class, 'edit'])->name('alunos.edit'); 
-    Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update'); 
-    Route::delete('/alunos/{id}', [AlunoController::class, 'destroy'])->name('alunos.destroy'); 
+    Route::get('/alunos/{id}/editar', [AlunoController::class, 'edit'])->name('alunos.edit');
+    Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update');
+    Route::delete('/alunos/{id}', [AlunoController::class, 'destroy'])->name('alunos.destroy');
 
     // ROTA CURSOS
     Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
     Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
-    Route::get('/cursos/{id}/editar', [CursoController::class, 'edit'])->name('cursos.edit'); 
-    Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update'); 
-    Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy'); 
+    Route::get('/cursos/{id}/editar', [CursoController::class, 'edit'])->name('cursos.edit');
+    Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
+    Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 
     // ROTA RESPONSAVEIS
     Route::get('/responsaveis', [ResponsavelController::class, 'index'])->name('responsaveis.index');
     Route::post('/responsaveis', [ResponsavelController::class, 'store'])->name('responsaveis.store');
-    Route::get('/responsaveis/{id}/editar', [ResponsavelController::class, 'edit'])->name('responsaveis.edit'); 
-    Route::put('/responsaveis/{id}', [ResponsavelController::class, 'update'])->name('responsaveis.update'); 
-    Route::delete('/responsaveis/{id}', [ResponsavelController::class, 'destroy'])->name('responsaveis.destroy'); 
+    Route::get('/responsaveis/{id}/editar', [ResponsavelController::class, 'edit'])->name('responsaveis.edit');
+    Route::put('/responsaveis/{id}', [ResponsavelController::class, 'update'])->name('responsaveis.update');
+    Route::delete('/responsaveis/{id}', [ResponsavelController::class, 'destroy'])->name('responsaveis.destroy');
+
+    // ROTAS REGISTRO DE SAÍDAS
+    Route::get('/registros', [RegistroSaidaController::class, 'index'])->name('registros.index'); // Listar registros
+    Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create'); // Exibir formulário de criação
+    Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store'); // Criar novo registro
+    Route::get('/registros/{id}/editar', [RegistroSaidaController::class, 'edit'])->name('registros.edit'); // (opcional) Exibir formulário de edição
+    Route::put('/registros/{id}', [RegistroSaidaController::class, 'update'])->name('registros.update'); // (opcional) Atualizar registro
+    Route::delete('/registros/{id}', [RegistroSaidaController::class, 'destroy'])->name('registros.destroy'); // Excluir registro
+    Route::get('/registros/pendentes', [RegistroSaidaController::class, 'controleDeSaida'])->name('registros.pendentes'); // Listar pendentes
+    Route::put('/registros/{id}/confirmar', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida'); // Confirmar saída
+    Route::put('/registros/{registro}/confirmar-saida', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida');
+    
+
+
 });
+Route::post('/registros/registrar', [RegistroSaidaController::class, 'store'])->name('registros.registrar');
 
 require __DIR__ . '/auth.php';

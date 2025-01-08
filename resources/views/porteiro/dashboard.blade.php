@@ -29,22 +29,43 @@
     <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
         <!-- Solicitar Aluno -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
-            <h1 class="text-xl font-bold mb-4">SOLICITAR ALUNO QUE SAIRÁ</h1>
-            <p class="text-gray-700 mb-2">ALUNO 1</p>
-            <p class="text-gray-700 mb-2">ALUNO 2</p>
-            <p class="text-gray-700 mb-2">ALUNO 3</p>
-            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
+            <h1 class="text-xl font-bold mb-4">SOLICITAR ENTRADA/SAÍDA ALUNO</h1>
+            <form action="{{ route('registros.registrar') }}" method="POST" class="flex flex-col gap-4 w-full max-w-md">
+                @csrf
+                <input type="text" name="matricula" class="border border-gray-300 rounded px-4 py-2"
+                    placeholder="MATRICULA" required>
+                <select name="tipo" class="border border-gray-300 rounded px-4 py-2" required>
+                    <option value="entrada">ENTRADA</option>
+                    <option value="saida">SAÍDA</option>
+                </select>
+                <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
+                <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
+            </form>
+
+            <!-- Exibir a mensagem após o envio -->
+            @if(session('status'))
+                <div class="mt-4 text-center text-xl font-semibold text-green-600">
+                    {{ session('status') }}
+                </div>
+            @endif
         </div>
+
         <!-- Movimentações Recentes -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MOVIMENTAÇÕES<br>RECENTES</h1>
-            <p class="text-gray-700 mb-2">ALUNO 1</p>
-            <p class="text-gray-700 mb-2">ALUNO 2</p>
-            <p class="text-gray-700 mb-2">ALUNO 3</p>
+            @foreach($movimentacoes as $movimentacao)
+                <div class="text-gray-700 mb-4">
+                    <p class="font-semibold">{{ $movimentacao->aluno->nome }}</p>
+                    <p class="text-gray-600">{{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}</p>
+                    <p class="text-gray-600">
+                        {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                    </p>
+                </div>
+            @endforeach
         </div>
         <!-- Cadastrar Entrada/Saída -->
         <div class="row-span-2 flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
-            <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA</h1>
+            <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA VISITANTES</h1>
             <form class="flex flex-col gap-4 w-full max-w-md">
                 <input type="text" class="border border-gray-300 rounded px-4 py-2" placeholder="NOME">
                 <input type="number" class="border border-gray-300 rounded px-4 py-2" placeholder="CPF">

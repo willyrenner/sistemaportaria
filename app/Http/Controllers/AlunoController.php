@@ -23,7 +23,7 @@ class AlunoController extends Controller
 
         Aluno::create($validatedData);
 
-        return redirect()->route('alunos.create')->with('success', 'Aluno cadastrado com sucesso!');
+        return redirect()->route('alunos.index')->with('success', 'Aluno cadastrado com sucesso!');
     }
 
     public function index()
@@ -44,7 +44,7 @@ class AlunoController extends Controller
         $responsaveis = Responsavel::all();
         $cursos = Curso::all();
 
-        return view('alunos.editar', compact('aluno', 'responsaveis', 'cursos'));
+        return view('alunos.index', compact('aluno', 'responsaveis', 'cursos'));
     }
 
     public function update(Request $request, $id)

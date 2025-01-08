@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Models\RegistroSaida;
 class PorteiroAuthController extends Controller
 {
     /**
@@ -108,7 +109,12 @@ class PorteiroAuthController extends Controller
     public function dashboard()
     {
         $porteiro = Auth::guard('porteiro')->user();
-        return view('porteiro.dashboard', compact('porteiro'));
+
+        $movimentacoes = RegistroSaida::with('aluno') // Relacionando os alunos
+            ->orderBy('solicitacao', 'desc') // Ordenando por data de solicitação
+            ->limit(5)
+            ->get(); // Obtendo todas as movimentações
+        return view('porteiro.dashboard', compact('porteiro', 'movimentacoes'));
     }
 
     public function index()

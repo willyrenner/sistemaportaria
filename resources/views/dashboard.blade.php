@@ -16,7 +16,7 @@
                         <ul class="space-y-2">
                             <li><a href="#" class="text-lg block hover:text-green-400">AUTORIZAR SAÍDA DE MENORES</a>
                             </li>
-                            <li><a href="#" class="text-lg block hover:text-green-400">HISTÓRICO DE SAÍDAS/ENTRADAS</a>
+                            <li><a href="/registros" class="text-lg block hover:text-green-400">HISTÓRICO DE SAÍDAS/ENTRADAS</a>
                             </li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
                             </li>
