@@ -39,6 +39,13 @@
                     <option value="saida">SAÍDA</option>
                 </select>
                 <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
+
+                @if($errors->has('motivo'))
+                    <div class="text-red-600 text-sm mt-2">
+                        {{ $errors->first('motivo') }}
+                    </div>
+                @endif
+
                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
             </form>
 
@@ -48,8 +55,8 @@
                     {{ session('status') }}
                 </div>
             @endif
-        </div>
 
+        </div>
         <!-- Movimentações Recentes -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MOVIMENTAÇÕES<br>RECENTES</h1>

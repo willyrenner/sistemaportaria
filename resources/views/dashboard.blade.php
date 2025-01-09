@@ -14,9 +14,10 @@
                     <div id="menu" class="bg-gray-800 p-4 rounded shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4">MENU</h2>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-lg block hover:text-green-400">AUTORIZAR SAÍDA DE MENORES</a>
+                            <li><a href="/autorizar-menores" class="text-lg block hover:text-green-400">AUTORIZAR SAÍDA DE MENORES</a>
                             </li>
-                            <li><a href="/registros" class="text-lg block hover:text-green-400">HISTÓRICO DE SAÍDAS/ENTRADAS</a>
+                            <li><a href="/registros" class="text-lg block hover:text-green-400">HISTÓRICO DE
+                                    SAÍDAS/ENTRADAS</a>
                             </li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
                             </li>
@@ -102,11 +103,15 @@
                             <button class="bg-gray-700 px-4 py-2 rounded hover:bg-gray-600">+18/-18</button>
                             <button class="col-span-2 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">FILTRAR</button>
                         </div>
-                        <ul class="space-y-2">
-                            <li>ALUNO 1 - SAIU</li>
-                            <li>ALUNO 2 - SAIU</li>
-                            <li>ALUNO 3 - ENTROU</li>
-                        </ul>
+                        @foreach($movimentacoes as $movimentacao)
+                            <div class="text-white-700 mb-4">
+                                <p class="font-semibold">{{ $movimentacao->aluno->nome }}</p>
+                                <p class="text-white-600">{{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}</p>
+                                <p class="text-white-600">
+                                    {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                                </p>
+                            </div>
+                        @endforeach
                     </div>
 
                 </div>

@@ -112,7 +112,7 @@ class PorteiroAuthController extends Controller
 
         $movimentacoes = RegistroSaida::with('aluno') // Relacionando os alunos
             ->orderBy('solicitacao', 'desc') // Ordenando por data de solicitação
-            ->limit(5)
+            ->limit(4)
             ->get(); // Obtendo todas as movimentações
         return view('porteiro.dashboard', compact('porteiro', 'movimentacoes'));
     }

@@ -23,7 +23,9 @@ class RegistroSaidaController extends Controller
             'tipo' => 'required|string', // Adicione se entrada ou saída for relevante
             'saida' => 'nullable|date', // Pode ser nulo na criação
             'permissao' => 'nullable|boolean',
-            'motivo' => 'nullable|string', // Opcional, adicione para motivo se necessário
+            'motivo' => $request->tipo === 'saida' ? 'required|string' : 'nullable|string',
+        ], [
+            'motivo.required' => 'O campo motivo é obrigatório para solicitações de saída.',
         ]);
 
         // Buscar o aluno pela matrícula
@@ -50,7 +52,8 @@ class RegistroSaidaController extends Controller
             // Se for "saída", verificar a idade
             if ($idade >= 18) {
                 // Se o aluno for maior de idade, autoriza automaticamente
-                $permissao = 'Autorizado'; ;
+                $permissao = 'Autorizada';
+                ;
                 $permissaoMensagem = 'Autorização automática - aluno maior de idade.';
             } else {
                 // Se o aluno for menor de idade, precisa da autorização da secretaria
@@ -100,19 +103,24 @@ class RegistroSaidaController extends Controller
         return view('registros.index', compact('registros'));
     }
 
-    public function controleDeSaida() // View do porteiro
+    public function autorizarSaidasMenores()
     {
+        // Filtrar registros de saída pendentes de alunos menores de idade
         $registrosPendentes = RegistroSaida::with('aluno')
             ->whereNull('saida')
+            ->whereHas('aluno', function ($query) {
+                $query->whereDate('data_nascimento', '>', Carbon::now()->subYears(18));
+            })
             ->get();
 
-        return view('registros.confirmar-pendentes', compact('registrosPendentes'));
+        return view('registros.autorizar-menores', compact('registrosPendentes'));
     }
+
 
     public function confirmarSaida(RegistroSaida $registro)
     {
         if (!$registro) {
-            return redirect()->route('registros.index')->with('error', 'Registro de saída não encontrado.');
+            return redirect()->route('autorizar-menores')->with('error', 'Registro de saída não encontrado.');
         }
 
         // Atualiza a saída para o horário atual
@@ -120,15 +128,18 @@ class RegistroSaidaController extends Controller
         $registro->permissao = "Autorizada";
         $registro->save();
 
-        return redirect()->route('registros.index')->with('success', 'Saída confirmada com sucesso!');
+        return redirect()->route('autorizar-menores')->with('success', 'Saída confirmada com sucesso!');
     }
 
-    public function movimentacoesPorteiro(){
+    public function movimentacoes()
+    {
         // Buscando as movimentações recentes (entrada ou saída), junto com o status de autorização
         $movimentacoes = RegistroSaida::with('aluno')
-            ->orderBy('solicitacao', 'desc') // Ordenar as movimentações mais recentes
+            ->orderBy('solicitacao', 'desc')
+            ->limit(3)
             ->get();
 
-        return view('porteiro.dashboard', compact('movimentacoes'));
+        return $movimentacoes;
     }
+
 }

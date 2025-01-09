@@ -25,7 +25,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $movimentacoes = app(RegistroSaidaController::class)->movimentacoes();
+    return view('dashboard', compact('movimentacoes'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/loggedin', function () {
@@ -64,8 +65,8 @@ Route::prefix('porteiros')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/porteiros', [PorteiroAuthController::class, 'index'])->name('porteiros.index');
     // ROTAS PORTEIROS
+    Route::get('/porteiros', [PorteiroAuthController::class, 'index'])->name('porteiros.index');
     Route::get('porteiros/{id}/edit', [PorteiroAuthController::class, 'edit'])->name('porteiros.edit');
     Route::put('porteiros/{id}', [PorteiroAuthController::class, 'update'])->name('porteiros.update');
     Route::delete('porteiros/{id}', [PorteiroAuthController::class, 'destroy'])->name('porteiros.destroy');
@@ -92,19 +93,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/responsaveis/{id}', [ResponsavelController::class, 'destroy'])->name('responsaveis.destroy');
 
     // ROTAS REGISTRO DE SAÍDAS
-    Route::get('/registros', [RegistroSaidaController::class, 'index'])->name('registros.index'); // Listar registros
-    Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create'); // Exibir formulário de criação
-    Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store'); // Criar novo registro
-    Route::get('/registros/{id}/editar', [RegistroSaidaController::class, 'edit'])->name('registros.edit'); // (opcional) Exibir formulário de edição
-    Route::put('/registros/{id}', [RegistroSaidaController::class, 'update'])->name('registros.update'); // (opcional) Atualizar registro
-    Route::delete('/registros/{id}', [RegistroSaidaController::class, 'destroy'])->name('registros.destroy'); // Excluir registro
-    Route::get('/registros/pendentes', [RegistroSaidaController::class, 'controleDeSaida'])->name('registros.pendentes'); // Listar pendentes
-    Route::put('/registros/{id}/confirmar', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida'); // Confirmar saída
+    Route::get('/registros', [RegistroSaidaController::class, 'index'])->name('registros.index');
+    Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create'); 
+    Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store'); 
     Route::put('/registros/{registro}/confirmar-saida', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida');
-    
-
+    Route::get('/autorizar-menores', [RegistroSaidaController::class, 'autorizarSaidasMenores'])->name('autorizar-menores');
 
 });
-Route::post('/registros/registrar', [RegistroSaidaController::class, 'store'])->name('registros.registrar');
+
 
 require __DIR__ . '/auth.php';
