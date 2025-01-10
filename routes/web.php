@@ -48,10 +48,10 @@ Route::get('/autenticar', function () {
 })->name('autenticar');
 
 
-// Logout do porteiro
-Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 Route::get('/porteiro/dashboard', [PorteiroAuthController::class, 'dashboard'])
     ->name('porteiro.dashboard');
+Route::post('/registros/registrar', [RegistroSaidaController::class, 'store'])->name('registros.registrar');
+Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 
 
 Route::prefix('porteiros')->group(function () {
@@ -98,7 +98,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store'); 
     Route::put('/registros/{registro}/confirmar-saida', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida');
     Route::get('/autorizar-menores', [RegistroSaidaController::class, 'autorizarSaidasMenores'])->name('autorizar-menores');
-
 });
 
 

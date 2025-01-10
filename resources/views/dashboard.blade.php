@@ -14,19 +14,20 @@
                     <div id="menu" class="bg-gray-800 p-4 rounded shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4">MENU</h2>
                         <ul class="space-y-2">
-                            <li><a href="/autorizar-menores" class="text-lg block hover:text-green-400">AUTORIZAR SAÍDA DE MENORES</a>
+                            <li><a href="/autorizar-menores" class="text-lg block hover:text-green-400">AUTORIZAR SAÍDA
+                                    DE MENORES</a>
                             </li>
                             <li><a href="/registros" class="text-lg block hover:text-green-400">HISTÓRICO DE
                                     SAÍDAS/ENTRADAS</a>
                             </li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
                             </li>
-                            <li><a href="/alunos" class="text-lg block hover:text-green-400">MENU ALUNO</a>
-                            </li>
                             <li><a href="/cursos" class="text-lg block hover:text-green-400">MENU CURSOS</a>
                             </li>
                             <li><a href="/responsaveis" class="text-lg block hover:text-green-400">MENU
                                     RESPONSÁVEIS</a>
+                            </li>
+                            <li><a href="/alunos" class="text-lg block hover:text-green-400">MENU ALUNO</a>
                             </li>
                         </ul>
                         <input type="text" class="mt-4 w-full px-3 py-2 rounded text-black" placeholder="BUSCAR ALUNO">
