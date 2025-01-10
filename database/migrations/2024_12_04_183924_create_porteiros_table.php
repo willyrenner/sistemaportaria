@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('role'); // permissão do porteiro
             $table->string('turno'); // turno
             $table->string('password'); // Senha segura
+            $table->boolean('password_reset_required')->default(true);
             $table->timestamps();
         });
     }

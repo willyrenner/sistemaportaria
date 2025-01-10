@@ -40,6 +40,7 @@ class PorteiroAuthController extends Controller
             'role' => 'porteiro', // Papel fixo
             'password' => Hash::make($request->cpf), // Senha baseada no CPF
             'turno' => $request->turno,
+            'password_reset_required' => true,
         ]);
 
         // Retornar mensagem de sucesso
@@ -88,9 +89,15 @@ class PorteiroAuthController extends Controller
         // Log para confirmar o login
         Log::info('Porteiro logado com sucesso: ' . $porteiro->matricula);
 
-        // Redirecionar para a dashboard do porteiro
-        Log::info('Redirecionando para a dashboard do porteiro.');
-        return redirect()->route('porteiro.dashboard');
+
+        if ($porteiro->password_reset_required) {
+            Log::info('Redirecionando para atualizer senha do porteiro.');
+            return redirect()->route('porteiro.dashboard');
+        } else {
+            Log::info('Redirecionando para a dashboard do porteiro.');
+            return redirect()->route('porteiro.dashboard');
+        }
+
     }
 
     /**
@@ -132,7 +139,7 @@ class PorteiroAuthController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
-            'cpf' => 'required|string|max:14', 
+            'cpf' => 'required|string|max:14',
             'matricula' => 'required|string|max:50',
             'turno' => 'required|string|max:50',
         ]);
@@ -154,6 +161,21 @@ class PorteiroAuthController extends Controller
 
         return redirect()->route('porteiros.index')->with('success', 'Porteiro excluído com sucesso!');
     }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $porteiro = Auth::guard('porteiro')->user();
+        $porteiro->password = Hash::make($request->password);
+        $porteiro->password_reset_required = 0;
+        $porteiro->save();
+
+        return redirect()->route('porteiro.dashboard')->with('success', 'Senha atualizada com sucesso!');
+    }
+
 
 
 }

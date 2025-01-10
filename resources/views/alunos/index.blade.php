@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Menu de Alunos') }}
-        </h2>
+        <div class="flex flex-col items-start ">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Menu de Alunos') }}
+            </h2>
+            <a href="{{ route('dashboard') }}" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 inline-block">
+                Voltar ao Dashboard
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12 bg-gray-800 min-h-screen">

@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table(table: 'porteiros')->insert([
-            ['name' => 'Manoel da Silva', 'email' => 'manoeldasilva@gmail.com', 'cpf' => '32145698722', 'matricula' => '20250101', 'role' => 'porteiro', 'turno' => 'matutino', 'password' => '$2y$10$ZuoFwQLmH6E4NXPylUs8eeE30b.KM9gUs2o0xl3MBtQHr/xCIVDXG', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Manoel da Silva', 'email' => 'manoeldasilva@gmail.com', 'cpf' => '32145698722', 'matricula' => '20250101', 'role' => 'porteiro', 'turno' => 'matutino', 'password' => '$2y$10$ZuoFwQLmH6E4NXPylUs8eeE30b.KM9gUs2o0xl3MBtQHr/xCIVDXG', 'password_reset_required' => '1', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

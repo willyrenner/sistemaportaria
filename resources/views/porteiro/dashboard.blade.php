@@ -103,6 +103,35 @@
             <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
         </div>
     </div>
+
+    <div id="updatePasswordModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4 text-center">Atualize sua Senha</h2>
+            <form id="passwordUpdateForm" action="{{ route('porteiro.password.update.submit') }}" method="POST">
+                @csrf
+                <div class="flex flex-col gap-4">
+                    <div>
+                        <label for="password" class="block font-semibold">Nova Senha</label>
+                        <input type="password" name="password" id="password"
+                            class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="block font-semibold">Confirme a Nova Senha</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation"
+                            class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                    </div>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Atualizar
+                        Senha</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
+
+<script>
+    @if(Auth::guard('porteiro')->user()->password_reset_required)
+        document.getElementById('updatePasswordModal').classList.remove('hidden');
+    @endif
+</script>
 
 </html>
