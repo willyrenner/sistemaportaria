@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\RegistroSaida;
 use App\Models\CadastrarVisitante;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
+
 class PorteiroAuthController extends Controller
 {
     /**
@@ -80,8 +84,8 @@ class PorteiroAuthController extends Controller
         CadastrarVisitante::create([
 
             'nome' => $request->nome,
-            'cpf' => $request->cpf, 
-            'tipo' => $request->tipo, 
+            'cpf' => $request->cpf,
+            'tipo' => $request->tipo,
             'motivo' => $request->motivo,
             'saida' => null,
             'funcionario_id' => $funcionarioId,
@@ -170,8 +174,41 @@ class PorteiroAuthController extends Controller
             ->orderBy('solicitacao', 'desc') // Ordenando por data de solicitação
             ->limit(5)
             ->get(); // Obtendo todas as movimentações
-        return view('porteiro.dashboard', compact('porteiro', 'movimentacoes'));
+
+        $registrosPendentes = CadastrarVisitante::whereNull('saida')
+            ->limit(5)
+            ->get();
+
+        return view('porteiro.dashboard', compact('porteiro', 'movimentacoes', 'registrosPendentes'));
     }
+
+    public function confirmarSaidaVisitante($id)
+    {
+        try {
+            // Localiza o visitante pelo ID
+            $visitante = CadastrarVisitante::findOrFail($id);
+
+            // Verifica se o visitante já possui uma saída registrada
+            if ($visitante->saida) {
+                return redirect()->route('porteiro.dashboard')->withErrors('Saída do visitante já foi registrada anteriormente.');
+            }
+
+            // Registra a data e hora da saída
+            $visitante->saida = Carbon::now();
+            $visitante->save();
+
+            return redirect()->route('porteiro.dashboard')->with('status_visitante_saida', 'Saída do visitante confirmada com sucesso!');
+        } catch (ModelNotFoundException $e) {
+            // Caso o visitante não seja encontrado
+            Log::error("Erro ao confirmar saída: Visitante não encontrado (ID: $id).", ['exception' => $e]);
+            return redirect()->route('porteiro.dashboard')->withErrors('Visitante não encontrado.');
+        } catch (Exception $e) {
+            // Tratamento de erros gerais
+            Log::error("Erro inesperado ao confirmar saída do visitante (ID: $id).", ['exception' => $e]);
+            return redirect()->route('porteiro.dashboard')->withErrors('Ocorreu um erro ao confirmar a saída do visitante. Por favor, tente novamente.');
+        }
+    }
+
 
     public function index()
     {

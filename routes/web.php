@@ -54,6 +54,9 @@ Route::post('/registros/registrarvisitante', [PorteiroAuthController::class, 'ca
 Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 Route::get('/porteiro/password-update', [PorteiroAuthController::class, 'passwordUpdateForm'])->name('porteiro.password.update');
 Route::post('/porteiro/password/update', [PorteiroAuthController::class, 'updatePassword'])->name('porteiro.password.update.submit');
+Route::put('/porteiro/confirmar-saida-visitante/{registro}', [PorteiroAuthController::class, 'confirmarSaidaVisitante'])->name('porteiro.confirmar-saida-visitante');
+
+
 
 Route::prefix('porteiros')->group(function () {
     Route::get('create', [PorteiroAuthController::class, 'create'])->name('porteiros.create');
@@ -109,8 +112,8 @@ Route::middleware(['auth'])->group(function () {
 
     // ROTAS REGISTRO DE SAÍDAS
     Route::get('/registros', [RegistroSaidaController::class, 'index'])->name('registros.index');
-    Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create'); 
-    Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store'); 
+    Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create');
+    Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store');
     Route::put('/registros/{registro}/confirmar-saida', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida');
     Route::get('/autorizar-menores', [RegistroSaidaController::class, 'autorizarSaidasMenores'])->name('autorizar-menores');
 });
