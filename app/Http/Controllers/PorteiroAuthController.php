@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\RegistroSaida;
+use App\Models\CadastrarVisitante;
 class PorteiroAuthController extends Controller
 {
     /**
@@ -45,6 +46,54 @@ class PorteiroAuthController extends Controller
 
         // Retornar mensagem de sucesso
         return redirect()->back()->with('success', 'Porteiro cadastrado com sucesso!');
+    }
+
+    public function cadastrarVisitante(Request $request)
+    {
+        // Validar os dados recebidos
+        $request->validate([
+            'nome' => 'required|string',
+            'cpf' => 'required|string|size:11',
+            'tipo' => 'required|string', // Adicione se entrada ou saída for relevante
+            'saida' => 'nullable|date', // Pode ser nulo na criação
+            'motivo' => $request->tipo === 'entrada' ? 'required|string' : 'nullable|string',
+        ], [
+            'motivo.required' => 'O campo motivo é obrigatório para solicitações de entrada.',
+        ]);
+
+        // Determinar os IDs de porteiro ou funcionário
+        $porteiroId = null;
+        $funcionarioId = null;
+
+        if (Auth::guard('porteiro')->check()) {
+            // Se o porteiro estiver autenticado
+            $porteiroId = Auth::guard('porteiro')->user()->id;
+        } elseif (Auth::guard('web')->check()) {
+            // Se o funcionário da secretaria estiver autenticado
+            $funcionarioId = Auth::guard('web')->user()->id;
+        } else {
+            // Nenhum usuário autenticado
+            return redirect()->route('login')->withErrors(['error' => 'Usuário não autenticado.']);
+        }
+
+        // Criar o registro de saída
+        CadastrarVisitante::create([
+
+            'nome' => $request->nome,
+            'cpf' => $request->cpf, 
+            'tipo' => $request->tipo, 
+            'motivo' => $request->motivo,
+            'saida' => null,
+            'funcionario_id' => $funcionarioId,
+            'porteiro_id' => $porteiroId,
+
+        ]);
+
+        if ($request->tipo === 'saida') {
+            return redirect()->back()->with('status_visitante', value: 'Saída registrada com sucesso!');
+        }
+
+        return redirect()->back()->with('status_visitante', 'Entrada registrada com sucesso!');
     }
 
     /**
@@ -119,7 +168,7 @@ class PorteiroAuthController extends Controller
 
         $movimentacoes = RegistroSaida::with('aluno') // Relacionando os alunos
             ->orderBy('solicitacao', 'desc') // Ordenando por data de solicitação
-            ->limit(4)
+            ->limit(5)
             ->get(); // Obtendo todas as movimentações
         return view('porteiro.dashboard', compact('porteiro', 'movimentacoes'));
     }

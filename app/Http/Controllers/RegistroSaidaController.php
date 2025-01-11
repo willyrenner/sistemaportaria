@@ -53,8 +53,7 @@ class RegistroSaidaController extends Controller
             if ($idade >= 18) {
                 // Se o aluno for maior de idade, autoriza automaticamente
                 $permissao = 'Autorizada';
-                ;
-                $permissaoMensagem = 'Autorização automática - aluno maior de idade.';
+                $permissaoMensagem = 'Autorização confirmada - aluno maior de idade.';
             } else {
                 // Se o aluno for menor de idade, precisa da autorização da secretaria
                 $permissaoMensagem = 'Necessário autorizar na secretaria - aluno menor de idade.';

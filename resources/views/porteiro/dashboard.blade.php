@@ -61,29 +61,37 @@
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MOVIMENTAÇÕES<br>RECENTES</h1>
             @foreach($movimentacoes as $movimentacao)
-                <div class="text-gray-700 mb-4">
+                <div class="text-gray-700 mb-4 flex">
                     <p class="font-semibold">{{ $movimentacao->aluno->nome }}</p>
-                    <p class="text-gray-600">{{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}</p>
-                    <p class="text-gray-600">
-                        {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                    <p class="text-gray-600 ml-1">
+                        | {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
                     </p>
+                    <p class="text-gray-600 font-semibold ml-1">|
+                        {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}</p>
                 </div>
             @endforeach
         </div>
         <!-- Cadastrar Entrada/Saída -->
         <div class="row-span-2 flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
-            <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA VISITANTES</h1>
-            <form class="flex flex-col gap-4 w-full max-w-md">
-                <input type="text" class="border border-gray-300 rounded px-4 py-2" placeholder="NOME">
-                <input type="number" class="border border-gray-300 rounded px-4 py-2" placeholder="CPF">
-                <input type="datetime-local" class="border border-gray-300 rounded px-4 py-2">
-                <select class="border border-gray-300 rounded px-4 py-2">
+            <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA DE VISITANTES</h1>
+            <form action="{{ route('porteiro.registrarvisitante') }}" method="POST"
+                class="flex flex-col gap-4 w-full max-w-md">
+                @csrf
+                <input type="text" name="nome" class="border border-gray-300 rounded px-4 py-2" placeholder="NOME" required>
+                <input type="number" name="cpf" class="border border-gray-300 rounded px-4 py-2" placeholder="CPF" required>
+                <select name="tipo" class="border border-gray-300 rounded px-4 py-2" required>
                     <option value="entrada">ENTRADA</option>
                     <option value="saida">SAÍDA</option>
                 </select>
-                <input type="text" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
+                <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
             </form>
+
+            @if(session('status_visitante'))
+                <div class="mt-4 text-center text-xl font-semibold text-green-600">
+                    {{ session('status_visitante') }}
+                </div>
+            @endif
         </div>
         <!-- Menu -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
@@ -104,7 +112,23 @@
         </div>
     </div>
 
-    <div id="updatePasswordModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+    <div id="confirmModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Confirmando ação...</h2>
+            <div class="flex justify-between">
+                <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                    Ok
+                </button>
+                <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="updatePasswordModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-4 text-center">Atualize sua Senha</h2>
             <form id="passwordUpdateForm" action="{{ route('porteiro.password.update.submit') }}" method="POST">
@@ -127,6 +151,82 @@
         </div>
     </div>
 </body>
+
+<script>
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmMessage = document.getElementById('confirmMessage');
+    const confirmOk = document.getElementById('confirmOk');
+    const confirmCancel = document.getElementById('confirmCancel');
+
+    const form = document.querySelector('form[action="{{ route('registros.registrar') }}"]');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const matricula = form.querySelector('input[name="matricula"]').value;
+        const tipo = form.querySelector('select[name="tipo"]').value;
+
+        fetch(`/alunos/${matricula}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Aluno não encontrado');
+                return response.json();
+            })
+            .then(data => {
+                confirmMessage.textContent = `Confirmar ${tipo === 'entrada' ? 'entrada' : 'saída'} de ${data.nome} (${data.matricula})?`;
+
+                confirmModal.classList.remove('hidden');
+
+                confirmOk.onclick = () => {
+                    confirmModal.classList.add('hidden');
+                    form.submit();
+                };
+
+                confirmCancel.onclick = () => {
+                    confirmModal.classList.add('hidden');
+                };
+            })
+            .catch(error => {
+                alert('Erro: ' + error.message);
+            });
+    });
+</script>
+
+<script>
+    const visitorForm = document.querySelector('form[action="{{ route('porteiro.registrarvisitante') }}"]');
+    const visitorConfirmModal = document.getElementById('confirmModal');
+    const visitorConfirmMessage = document.getElementById('confirmMessage');
+    const visitorConfirmOk = document.getElementById('confirmOk');
+    const visitorConfirmCancel = document.getElementById('confirmCancel');
+
+    visitorForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const nome = visitorForm.querySelector('input[name="nome"]').value;
+        const tipo = visitorForm.querySelector('select[name="tipo"]').value;
+
+        if (!nome) {
+            alert('Por favor, insira o nome do visitante.');
+            return;
+        }
+
+        visitorConfirmMessage.textContent = `Confirmar ${tipo === 'entrada' ? 'entrada' : 'saída'} do visitante ${nome}?`;
+
+        // Exibe o modal de confirmação
+        visitorConfirmModal.classList.remove('hidden');
+
+        // Confirmação
+        visitorConfirmOk.onclick = () => {
+            visitorConfirmModal.classList.add('hidden');
+            visitorForm.submit();
+        };
+
+        // Cancelamento
+        visitorConfirmCancel.onclick = () => {
+            visitorConfirmModal.classList.add('hidden');
+        };
+    });
+</script>
+
+
 
 <script>
     @if(Auth::guard('porteiro')->user()->password_reset_required)

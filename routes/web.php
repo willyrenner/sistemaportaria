@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Route::get('/dashboard', function () {
     $movimentacoes = app(RegistroSaidaController::class)->movimentacoes();
@@ -50,6 +50,7 @@ Route::get('/autenticar', function () {
 
 Route::get('/porteiro/dashboard', [PorteiroAuthController::class, 'dashboard'])->name('porteiro.dashboard');
 Route::post('/registros/registrar', [RegistroSaidaController::class, 'store'])->name('registros.registrar');
+Route::post('/registros/registrarvisitante', [PorteiroAuthController::class, 'cadastrarVisitante'])->name('porteiro.registrarvisitante');
 Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 Route::get('/porteiro/password-update', [PorteiroAuthController::class, 'passwordUpdateForm'])->name('porteiro.password.update');
 Route::post('/porteiro/password/update', [PorteiroAuthController::class, 'updatePassword'])->name('porteiro.password.update.submit');
@@ -61,6 +62,20 @@ Route::prefix('porteiros')->group(function () {
     Route::get('/', [PorteiroAuthController::class, 'index'])->name('porteiros.index');
     Route::delete('{id}', [PorteiroAuthController::class, 'destroy'])->name('porteiros.destroy');
 });
+
+Route::get('/alunos/{matricula}', function ($matricula) {
+    $aluno = \App\Models\Aluno::where('matricula', $matricula)->first();
+
+    if ($aluno) {
+        return response()->json([
+            'nome' => $aluno->nome,
+            'matricula' => $aluno->matricula,
+        ]);
+    }
+
+    return response()->json(['error' => 'Aluno não encontrado'], 404);
+})->name('alunos.buscar');
+
 
 
 
