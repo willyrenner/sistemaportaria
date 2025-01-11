@@ -20,6 +20,9 @@
                             <li><a href="/registros" class="text-lg block hover:text-green-400">HISTÓRICO DE
                                     SAÍDAS/ENTRADAS</a>
                             </li>
+                            <li><a href="/registros/visitantes" class="text-lg block hover:text-green-400">HISTÓRICO DE
+                                    VISITANTES</a>
+                            </li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-400">MENU PORTEIROS</a>
                             </li>
                             <li><a href="/cursos" class="text-lg block hover:text-green-400">MENU CURSOS</a>

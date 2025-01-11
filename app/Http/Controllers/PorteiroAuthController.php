@@ -16,6 +16,13 @@ use Exception;
 
 class PorteiroAuthController extends Controller
 {
+
+    public function registros() // Listagem de registros
+    {
+        $registros = CadastrarVisitante::all();
+        return view('registros.visitantes', compact('registros'));
+    }
+
     /**
      * Exibe a página de login de porteiro.
      */
@@ -42,8 +49,8 @@ class PorteiroAuthController extends Controller
             'email' => 'porteiro' . $request->cpf . '@example.com',
             'cpf' => $request->cpf,
             'matricula' => $request->matricula,
-            'role' => 'porteiro', // Papel fixo
-            'password' => Hash::make($request->cpf), // Senha baseada no CPF
+            'role' => 'porteiro', 
+            'password' => Hash::make($request->cpf),
             'turno' => $request->turno,
             'password_reset_required' => true,
         ]);
