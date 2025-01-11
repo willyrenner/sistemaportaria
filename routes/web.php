@@ -50,7 +50,6 @@ Route::get('/autenticar', function () {
 
 Route::get('/porteiro/dashboard', [PorteiroAuthController::class, 'dashboard'])->name('porteiro.dashboard');
 Route::post('/registros/registrar', [RegistroSaidaController::class, 'store'])->name('registros.registrar');
-
 Route::post('/registros/registrarvisitante', [PorteiroAuthController::class, 'cadastrarVisitante'])->name('porteiro.registrarvisitante');
 Route::post('/porteiro/logout', [PorteiroAuthController::class, 'logout'])->name('porteiro.logout');
 Route::get('/porteiro/password-update', [PorteiroAuthController::class, 'passwordUpdateForm'])->name('porteiro.password.update');
@@ -58,6 +57,8 @@ Route::post('/porteiro/password/update', [PorteiroAuthController::class, 'update
 Route::put('/porteiro/confirmar-saida-visitante/{registro}', [PorteiroAuthController::class, 'confirmarSaidaVisitante'])->name('porteiro.confirmar-saida-visitante');
 Route::get('/registros/visitantes', [PorteiroAuthController::class, 'registros'])->name('registros.visitantes');
 
+Route::get('/porteiro/visitantes', [PorteiroAuthController::class, 'registrosVisitantes'])->name('porteiro.visitantes');
+Route::get('/porteiro/alunos', [PorteiroAuthController::class, 'registrosAlunos'])->name('porteiro.index');
 
 Route::prefix('porteiros')->group(function () {
     Route::get('create', [PorteiroAuthController::class, 'create'])->name('porteiros.create');

@@ -23,6 +23,20 @@ class PorteiroAuthController extends Controller
         return view('registros.visitantes', compact('registros'));
     }
 
+    public function registrosVisitantes() // Listagem de registros
+    {
+        $porteiro = Auth::guard('porteiro')->user();
+        $registros = CadastrarVisitante::all();
+        return view('porteiro.visitantes', compact('registros', 'porteiro'));
+    }
+
+    public function registrosAlunos() // Listagem de registros
+    {
+        $porteiro = Auth::guard('porteiro')->user();
+        $registros = RegistroSaida::with('aluno')->get();
+        return view('porteiro.index', compact('registros', 'porteiro'));
+    }
+
     /**
      * Exibe a página de login de porteiro.
      */

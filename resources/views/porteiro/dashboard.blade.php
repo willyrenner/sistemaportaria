@@ -57,22 +57,36 @@
             @endif
 
         </div>
-        <!-- Movimentações Recentes -->
-        <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
-            <h1 class="text-xl font-bold mb-4">MOVIMENTAÇÕES<br>RECENTES</h1>
-            @foreach($movimentacoes as $movimentacao)
-                <div class="text-gray-700 mb-4 flex flex items-start">
-                    <p class="font-semibold">{{ $movimentacao->aluno->nome }} | </p>
-                    <p class="text-gray-600 ml-1">
-                        {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }} |
-                    </p>
-                    <p class="text-gray-600 font-semibold ml-1">
-                        {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
-                    </p>
-                </div>
-            @endforeach
 
+        <!-- Movimentações Recentes -->
+        <div class="bg-white shadow-lg p-6 rounded-lg">
+            <h1 class="text-xl font-bold mb-4 text-center">MOVIMENTAÇÕES RECENTES</h1>
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full border-collapse border border-gray-200">
+                    <thead>
+                        <tr class="bg-green-600 text-white">
+                            <th class="px-4 py-2 border">Nome</th>
+                            <th class="px-4 py-2 border">Tipo</th>
+                            <th class="px-4 py-2 border">Permissão</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($movimentacoes as $movimentacao)
+                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                <td class="px-4 py-2 border">{{ $movimentacao->aluno->nome }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
         <!-- Cadastrar Entrada/Saída -->
         <div class="row-span-2 flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA DE VISITANTES</h1>
@@ -125,9 +139,8 @@
         <!-- Menu -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MENU</h1>
-            <a href="#" class="text-green-600 hover:underline mb-2">SOLICITAR SAÍDA DE ALUNO</a>
-            <a href="#" class="text-green-600 hover:underline mb-2">CADASTRAR ENTRADA/SAÍDA DE MAIORES</a>
-            <a href="#" class="text-green-600 hover:underline mb-4">HISTÓRICO DE MOVIMENTAÇÕES</a>
+            <a href="/porteiro/visitantes" class="text-green-600 hover:underline mb-4">HISTÓRICO DE VISITANTES</a>
+            <a href="/porteiro/alunos" class="text-green-600 hover:underline mb-4">HISTÓRICO DE ALUNOS</a>
             <div class="flex gap-2 w-full max-w-md">
                 <input type="text" class="border border-gray-300 rounded flex-1 px-4 py-2" placeholder="BUSCAR ALUNO">
                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">BUSCAR</button>
