@@ -152,9 +152,7 @@ class PorteiroAuthController extends Controller
         // Verificar se a senha está correta
         if (!Hash::check($request->password, $porteiro->password)) {
             Log::warning('Senha incorreta para matrícula: ' . $request->matricula);
-            throw ValidationException::withMessages([
-                'matricula' => trans('auth.failed'),
-            ]);
+            return redirect()->back()->withErrors('Senha Incorreta');
         }
 
         // Logar o porteiro

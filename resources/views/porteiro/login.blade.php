@@ -15,11 +15,13 @@
             align-items: center;
             margin-bottom: 20px;
         }
+
         #p {
             font-size: 18px;
             font-weight: bold;
             color: #1d4ed8;
         }
+
         /* Personalização para o background */
         #body {
             background: linear-gradient(to bottom, #144444 20%, #18746c 100%);
@@ -40,19 +42,34 @@
 
         <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Login</h1>
 
+        @if($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded mb-4">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form method="POST" action="{{ route('porteiro.login') }}">
             @csrf
             <!-- Campo de Usuário (Email ou Matrícula) -->
-            <input type="text" name="matricula" id="input" class="w-full p-3 mb-4 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Usuário" required>
+            <input type="text" name="matricula" id="input"
+                class="w-full p-3 mb-4 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Usuário" required>
 
             <!-- Campo de Senha -->
-            <input type="password" name="password" id="input" class="w-full p-3 mb-6 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Senha" required>
+            <input type="password" name="password" id="input"
+                class="w-full p-3 mb-6 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Senha" required>
 
             <!-- Link para recuperação de senha -->
-            <a href="#" id="link" class="text-sm text-blue-600 hover:underline block text-center mb-4">Esqueceu sua senha?</a>
+            <a href="#" id="link" class="text-sm text-blue-600 hover:underline block text-center mb-4">Esqueceu sua
+                senha?</a>
 
             <!-- Botão de Login -->
-            <button type="submit" id="button" class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" id="button"
+                class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 Entrar
             </button>
         </form>

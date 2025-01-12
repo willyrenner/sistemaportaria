@@ -81,8 +81,10 @@
                                     <form action="{{ route('registros.confirmar-saida', $registro->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit"
-                                            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+
+                                        <button type="button"
+                                            class="autorizar-saida px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                                            data-nome="{{ $registro->aluno->nome }} ({{ $registro->aluno->matricula }})" data-registro-id="{{ $registro->id }}">
                                             Autorizar Saída
                                         </button>
                                     </form>
@@ -118,6 +120,47 @@
     </div>
 
     <script>
+        document.querySelectorAll('.autorizar-saida').forEach(button => {
+            button.addEventListener('click', function () {
+                const nome = button.getAttribute('data-nome');
+                const registroId = button.getAttribute('data-registro-id');
+
+                // Configura o modal
+                confirmMessage.textContent = `Confirmar saída do aluno ${nome}?`;
+                confirmModal.classList.remove('hidden');
+
+                // Confirmar ação
+                confirmOk.onclick = () => {
+                    confirmModal.classList.add('hidden');
+
+                    // Cria um formulário temporário para enviar a requisição
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/registros/${registroId}/confirmar-saida`;
+
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'PUT';
+                    form.appendChild(methodInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                };
+
+                // Cancelar ação
+                confirmCancel.onclick = () => {
+                    confirmModal.classList.add('hidden');
+                };
+            });
+        });
+
         const confirmModal = document.getElementById('confirmModal');
         const confirmMessage = document.getElementById('confirmMessage');
         const confirmOk = document.getElementById('confirmOk');

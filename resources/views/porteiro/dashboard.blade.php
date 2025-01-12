@@ -108,27 +108,43 @@
                 </div>
             @endif
 
-            <h1 class="text-xl font-bold mb-4 mt-4">Confirmar Saída Visitante</h1>
-            @forelse($registrosPendentes as $registro)
-                <tr>
-                    <td class="px-4 py-2 border"><b>Nome:</b> {{ $registro->nome }}</td>
-                    <td class="px-4 py-2 border"><b>CPF:</b> {{ $registro->cpf }}</td>
-                    <td class="px-4 py-2 border">{{ $registro->motivo ?? 'N/A' }}</td>
-                    <td class="px-4 py-2 border">
-                        <button type="button"
-                            class="autorizar-saida px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                            data-nome="{{ $registro->nome }}" data-registro-id="{{ $registro->id }}">
-                            Confirmar Saída
-                        </button>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="text-center px-4 py-2 border">
-                        Nenhuma saída pendente para visitantes.
-                    </td>
-                </tr>
-            @endforelse
+            <h1 class="text-xl font-bold mb-4 mt-4 text-center">Confirmar Saída Visitante</h1>
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full border-collapse border border-gray-200">
+                    <thead>
+                        <tr class="bg-green-600 text-white">
+                            <th class="px-4 py-2 border">Nome</th>
+                            <th class="px-4 py-2 border">CPF</th>
+                            <th class="px-4 py-2 border">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($registrosPendentes as $registro)
+                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                <td class="px-4 py-2 border">{{ $registro->nome }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ $registro->cpf }}
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    <button type="button"
+                                        class="autorizar-saida px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                                        data-nome="{{ $registro->nome }}" data-registro-id="{{ $registro->id }}">
+                                        Confirmar Saída
+                                    </button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="px-4 py-2 border">
+                                    Nenhuma saída pendente para visitantes.
+                                </td>
+                                <td class="px-4 py-2 border">----</td>
+                                <td class="px-4 py-2 border">----</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
             @if(session('status_visitante_saida'))
                 <div class="mt-4 text-center text-xl font-semibold text-green-600">
                     {{ session('status_visitante_saida') }}
