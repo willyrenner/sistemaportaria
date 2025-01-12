@@ -41,36 +41,21 @@
         </div>
 
         <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Seja Bem-Vindo</h1>
-        <!-- <p class="text-yellow-400 text-center mb-6">Você não está autenticado</p> -->
-        <!-- <p class="bg-yellow-400 text-white p-4 rounded mb-4">Você não está autenticado</p>
 
-        @if($errors->any())
-            <div class="bg-red-500 text-white p-4 rounded mb-4">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif -->
+        <div id="local-error" class="bg-red-500 text-white p-4 rounded mb-4" hidden></div>
 
-        @if(Auth::check())
-            <p class="bg-green-400 text-white p-4 rounded mb-4">Você está autenticado</p>
-        @else
-            <p class="bg-yellow-400 text-white p-4 rounded mb-4">Você não está autenticado</p>
-        @endif
+        <script>
+            const localError = localStorage.getItem('error');
+            if (localError) {
+                const errorDiv = document.getElementById('local-error');
 
-        @if($errors->any())
-            <div class="bg-red-500 text-white p-4 rounded mb-4">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @else
-            <!-- <p class="bg-blue-400 text-white p-4 rounded mb-4">Nenhum erro encontrado!</p> -->
-        @endif
+                errorDiv.removeAttribute('hidden');
+
+                errorDiv.textContent = localError;
+
+                localStorage.removeItem('error');
+            }
+        </script>
 
 
         <!-- Botões de ação -->

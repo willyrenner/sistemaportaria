@@ -20,30 +20,24 @@
     axios.post('/callback', { token: token })
         .then(response => {
             console.log('Token enviado com sucesso:', response.data);
-            window.location.href = '/dashboard'
+            window.location.href = '/dashboard'; // Redireciona em caso de sucesso
         })
         .catch(error => {
+            let errorMessage = '';
+
             if (error.response) {
-                // A resposta do servidor
-                console.error('Erro no servidor:', error.response.data);
+                errorMessage = error.response.data.error;
             } else if (error.request) {
-                // O pedido foi feito, mas não houve resposta
-                console.error('Erro no pedido:', error.request);
+                errorMessage = 'Erro no pedido. O servidor não respondeu.';
             } else {
-                // Algo aconteceu na configuração do pedido
-                console.error('Erro na configuração do pedido:', error.message);
+                errorMessage = 'Erro na configuração do pedido: ' + error.message;
             }
+
+            // Salva a mensagem de erro no Local Storage
+            localStorage.setItem('error', errorMessage);
+
+            // Redireciona para a página inicial
+            window.location.href = '/';
         });
 
-
-
 </script>
-@if($errors->any())
-    <div class="bg-red-500 text-white p-4 rounded mb-4">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif

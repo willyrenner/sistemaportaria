@@ -64,7 +64,9 @@ class AuthenticatedSessionController extends Controller
         // Verifica se o token foi fornecido
         if (!$token) {
             return response()->json(['error' => 'Token não fornecido.'], 400);
-        } else {
+        }
+
+        try {
             $client = new Client();
             $response = $client->request('GET', 'https://suap.ifrn.edu.br/api/eu/', [
                 'headers' => [
@@ -75,29 +77,23 @@ class AuthenticatedSessionController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
 
-            $nome = isset($data['nome_usual']) ? $data['nome_usual'] : 'Nome não disponível';
-            $email = isset($data['email']) ? $data['email'] : 'E-mail não disponível';
-            $matricula = isset($data['identificacao']) ? $data['identificacao'] : 'identificacao não disponível';
+            $nome = $data['nome_usual'] ?? 'Nome não disponível';
+            $email = $data['email'] ?? 'E-mail não disponível';
+            $matricula = $data['identificacao'] ?? 'identificacao não disponível';
 
-            // TO-DO: NÃO DEIXAR ALUNO ACESSAR O SISTEMA
-            // if (strtolower(isset($data['tipo_usuario'])) === 'aluno') {
-            //     return redirect('/')->back()->with('error', 'Usuário não pode acessar o sistema!!!');
+            // Verifica o tipo de usuário
+            // $tipo_usuario = strtolower($data['tipo_usuario'] ?? '');
+            // $tipo_usuario_aluno = 'aluno';
+
+            // if ($tipo_usuario === $tipo_usuario_aluno) {
+            //     // Retorna uma resposta com erro e status HTTP 403
+            //     return response()->json(['error' => 'Esse usuário não pode acessar o sistema!'], 403);
             // }
-
-            $tipo_usuario = $data['tipo_usuario'];
-            $tipo_usuario_aluno = strtolower('Aluno');
-            $tipo_usuario_docente = strtolower('Servidor (Docente)');
-
-            // Mudar para validar aluno ao invés de docente
-            if (isset($data['tipo_usuario']) && strtolower($tipo_usuario) === $tipo_usuario_docente) {
-                return redirect('/')->with('error', 'Esse usuário não pode acessar o sistema!');
-            }
-
 
             // Cria ou atualiza o usuário no banco
             $user = User::updateOrCreate(
                 ['email' => $email],
-                ['name' => $nome, 'password' => Hash::make('password'), 'identificacao' => $matricula] // Senha aleatória
+                ['name' => $nome, 'password' => Hash::make('password'), 'identificacao' => $matricula]
             );
 
             // Tenta autenticar o usuário
@@ -106,7 +102,11 @@ class AuthenticatedSessionController extends Controller
             Log::info('Usuário autenticado: ' . $user->name);
 
             // Redireciona para o painel ou área restrita
-            return redirect()->intended(route('dashboard', absolute: false));
+            return redirect('dashboard');
+        } catch (\Exception $e) {
+            Log::error('Erro ao processar o callback: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao processar a solicitação.'], 500);
         }
     }
+
 }
