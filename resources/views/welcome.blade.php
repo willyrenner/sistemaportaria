@@ -15,11 +15,13 @@
             align-items: center;
             margin-bottom: 20px;
         }
+
         #p {
             font-size: 18px;
             font-weight: bold;
             color: #1d4ed8;
         }
+
         /* Personalização para o background */
         #body {
             background: linear-gradient(to bottom, #144444 20%, #18746c 100%);
@@ -31,10 +33,10 @@
 </head>
 
 <body id="body" class="flex items-center justify-center min-h-screen">
-
     <div class="bg-white rounded-lg shadow-lg w-80 p-8">
         <div id="containerLogo">
-            <img src="https://ead.ifrn.edu.br/portal/wp-content/uploads/2019/03/2000px-Logotipo_IFET.svg_-764x1024.png" alt="Logo IFRN" class="w-24 mb-4" />
+            <img src="https://ead.ifrn.edu.br/portal/wp-content/uploads/2019/03/2000px-Logotipo_IFET.svg_-764x1024.png"
+                alt="Logo IFRN" class="w-24 mb-4" />
             <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1>
         </div>
 

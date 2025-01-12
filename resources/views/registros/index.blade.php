@@ -36,7 +36,7 @@
                                     <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $registro->tipo }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->solicitacao }}</td>
+                                    <td class="px-4 py-2 border">{{ date('d/m/Y - H:i', strtotime($registro->solicitacao)) }}</td>
                                     <td class="px-4 py-2 border">
                                         {{ $registro->permissao ?? 'Aguardando autorização' }}
                                     </td>
@@ -54,11 +54,13 @@
                             <tr>
                                 <th class="px-4 py-2 text-left border">Matrícula</th>
                                 <th class="px-4 py-2 text-left border">Aluno</th>
-                                <th class="px-4 py-2 text-left border">Tipo</th>
+                                <th class="px-4 py-2 text-left border">Observação</th>
                                 <th class="px-4 py-2 text-left border">Data Solicitação</th>
                                 <th class="px-4 py-2 text-left border">Data Saída</th>
                                 <th class="px-4 py-2 text-left border">Motivo</th>
                                 <th class="px-4 py-2 text-left border">Permissão</th>
+                                <th class="px-4 py-2 text-left border">Autorizado</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -66,13 +68,14 @@
                                 <tr>
                                     <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->tipo }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->solicitacao }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->saida ?? 'Pendente' }}</td>
+                                    <td class="px-4 py-2 border">{{ $registro->observacao_responsavel }}</td>
+                                    <td class="px-4 py-2 border">{{ date('d/m/Y - H:i', strtotime($registro->solicitacao)) }}</td>
+                                    <td class="px-4 py-2 border">{{ date('d/m/Y - H:i', strtotime($registro->saida ?? 'Pendente')) }}</td>
                                     <td class="px-4 py-2 border">{{ $registro->motivo ?? 'N/A' }}</td>
                                     <td class="px-4 py-2 border">
                                         {{ $registro->permissao ?? 'Aguardando autorização' }}
                                     </td>
+                                    <td class="px-4 py-2 border">{{ $registro->funcionario->identificacao ?? 'N/A' }}</td>
                                 </tr>
 
                                 <!-- Formulário para Confirmar Saída -->

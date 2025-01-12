@@ -28,7 +28,7 @@
 
     <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
         <!-- Solicitar Aluno -->
-        <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
+        <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg col-span-1">
             <h1 class="text-xl font-bold mb-4">SOLICITAR ENTRADA/SAÍDA ALUNO</h1>
             <form action="{{ route('registros.registrar') }}" method="POST" class="flex flex-col gap-4 w-full max-w-md">
                 @csrf
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Movimentações Recentes -->
-        <div class="bg-white shadow-lg p-6 rounded-lg">
+        <div class="row-span-2 flex flex-col bg-white shadow-lg p-6 rounded-lg col-span-1">
             <h1 class="text-xl font-bold mb-4 text-center">MOVIMENTAÇÕES RECENTES</h1>
             <div class="overflow-x-auto">
                 <table class="table-auto w-full border-collapse border border-gray-200">
@@ -68,20 +68,31 @@
                             <th class="px-4 py-2 border">Nome</th>
                             <th class="px-4 py-2 border">Tipo</th>
                             <th class="px-4 py-2 border">Permissão</th>
+                            <th class="px-4 py-2 border">Data/Hora</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($movimentacoes as $movimentacao)
-                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
-                                <td class="px-4 py-2 border">{{ $movimentacao->aluno->nome }}</td>
-                                <td class="px-4 py-2 border">
-                                    {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
-                                </td>
-                            </tr>
-                        @endforeach
+                        @forelse($movimentacoes as $movimentacao)
+                        <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                            <td class="px-4 py-2 border">{{ $movimentacao->aluno->nome }}</td>
+                            <td class="px-4 py-2 border">
+                                {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                            </td>
+                            <td class="px-4 py-2 border">{{$movimentacao->saida ? date('d/m/Y - H:i', strtotime($movimentacao->saida )) : 'Pendente'}}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="px-4 py-2 border">
+                                Nenhuma movimentação recente de alunos.
+                            </td>
+                            <td class="px-4 py-2 border">----</td>
+                            <td class="px-4 py-2 border">----</td>
+                            <td class="px-4 py-2 border">----</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -161,12 +172,6 @@
                 <input type="text" class="border border-gray-300 rounded flex-1 px-4 py-2" placeholder="BUSCAR ALUNO">
                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">BUSCAR</button>
             </div>
-        </div>
-        <!-- Observações -->
-        <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
-            <h1 class="text-xl font-bold mb-4">OBSERVAÇÕES</h1>
-            <textarea class="border border-gray-300 rounded px-4 py-2 w-full h-32 mb-4"></textarea>
-            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
         </div>
     </div>
 

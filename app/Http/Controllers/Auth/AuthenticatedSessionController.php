@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Models\User;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -52,15 +53,13 @@ class AuthenticatedSessionController extends Controller
     public function handleSuapCallback(Request $request)
     {
         // Log para verificar se a função está sendo chamada
-
+        Log::info('handleSuapCallback foi chamado.');
 
         // Obtém o token de acesso da requisição
         $token = $request->input('token');
 
-        
-
         // Log para verificar o token recebido
-   
+        Log::info('Token recebido: ' . $token);
 
         // Verifica se o token foi fornecido
         if (!$token) {
@@ -76,20 +75,28 @@ class AuthenticatedSessionController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
 
-                $nome = isset($data['nome_usual']) ? $data['nome_usual'] : 'Nome não disponível';
-                $email = isset($data['email']) ? $data['email'] : 'E-mail não disponível';
+            $nome = isset($data['nome_usual']) ? $data['nome_usual'] : 'Nome não disponível';
+            $email = isset($data['email']) ? $data['email'] : 'E-mail não disponível';
+            $matricula = isset($data['identificacao']) ? $data['identificacao'] : 'identificacao não disponível';
 
-                // Cria ou atualiza o usuário no banco
-                $user = User::updateOrCreate(
-                    ['email' => $email],
-                    ['name' => $nome, 'password' => Hash::make('password')] // Senha aleatória
-                );
+            // TO-DO: NÃO DEIXAR ALUNO ACESSAR O SISTEMA
+            if (strtolower(isset($data['tipo_usuario'])) === 'aluno') {
+                return redirect('/')->back()->with('error', 'Usuário não pode acessar o sistema!!!');
+            }
 
-                // Tenta autenticar o usuário
-                Auth::login($user);
+            // Cria ou atualiza o usuário no banco
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                ['name' => $nome, 'password' => Hash::make('password'), 'identificacao' => $matricula] // Senha aleatória
+            );
 
-                // Redireciona para o painel ou área restrita
-                return redirect()->intended(route('dashboard', absolute: false));
+            // Tenta autenticar o usuário
+            Auth::login($user);
+            Log::info('Usuário autenticado: ' . $user->email);
+            Log::info('Usuário autenticado: ' . $user->name);
+
+            // Redireciona para o painel ou área restrita
+            return redirect()->intended(route('dashboard', absolute: false));
 
         }
     }

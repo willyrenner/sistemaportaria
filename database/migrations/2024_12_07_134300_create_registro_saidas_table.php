@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('permissao')->nullable();
             $table->timestamp('saida')->nullable();
             $table->text('motivo')->nullable();
-
+            $table->text('observacao_responsavel')->nullable();
 
             $table->unsignedBigInteger('aluno_id');
             $table->unsignedBigInteger('funcionario_id')->nullable();

@@ -84,7 +84,8 @@
 
                                         <button type="button"
                                             class="autorizar-saida px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                                            data-nome="{{ $registro->aluno->nome }} ({{ $registro->aluno->matricula }})" data-registro-id="{{ $registro->id }}">
+                                            data-nome="{{ $registro->aluno->nome }} ({{ $registro->aluno->matricula }})"
+                                            data-registro-id="{{ $registro->id }}">
                                             Autorizar Saída
                                         </button>
                                     </form>
@@ -108,13 +109,20 @@
         class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Confirmando ação...</h2>
-            <div class="flex justify-between">
-                <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
-                    Ok
-                </button>
-                <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
-                    Cancelar
-                </button>
+            <div class="flex flex-col gap-4 justify-between">
+
+                <!-- Campo Observação -->
+                <input type="text" name="observacao_responsavel" id="observacao_responsavel" placeholder="Observação"
+                    class="hidden w-full px-3 py-2 border rounded text-black" />
+
+                <div class="flex justify-between">
+                    <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                        Ok
+                    </button>
+                    <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                        Cancelar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -124,10 +132,14 @@
             button.addEventListener('click', function () {
                 const nome = button.getAttribute('data-nome');
                 const registroId = button.getAttribute('data-registro-id');
+                const observacaoInput = document.getElementById('observacao_responsavel');
 
                 // Configura o modal
                 confirmMessage.textContent = `Confirmar saída do aluno ${nome}?`;
                 confirmModal.classList.remove('hidden');
+
+                // Exibe o campo de observação
+                observacaoInput.classList.remove('hidden');
 
                 // Confirmar ação
                 confirmOk.onclick = () => {
@@ -150,6 +162,13 @@
                     methodInput.value = 'PUT';
                     form.appendChild(methodInput);
 
+                    // Inclui o valor da observação no formulário
+                    const observacao = document.createElement('input');
+                    observacao.type = 'hidden';
+                    observacao.name = 'observacao_responsavel';
+                    observacao.value = observacaoInput.value;
+                    form.appendChild(observacao);
+
                     document.body.appendChild(form);
                     form.submit();
                 };
@@ -157,6 +176,8 @@
                 // Cancelar ação
                 confirmCancel.onclick = () => {
                     confirmModal.classList.add('hidden');
+                    observacaoInput.value = ''; // Limpa o campo de observação
+                    observacaoInput.classList.add('hidden'); // Esconde o campo novamente
                 };
             });
         });
@@ -179,7 +200,8 @@
                     return response.json();
                 })
                 .then(data => {
-                    confirmMessage.textContent = `Confirmar ${tipo === 'entrada' ? 'entrada' : 'saída'} de ${data.nome} (${data.matricula})?`;
+                    confirmMessage.textContent = `Confirmar ${tipo === 'entrada' ? 'entrada' : 'saída'} de ${data.nome}
+    (${data.matricula})?`;
 
                     confirmModal.classList.remove('hidden');
 

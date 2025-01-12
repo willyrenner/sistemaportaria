@@ -20,8 +20,8 @@ class RegistroSaida extends Model
         'permissao',
         'saida',
         'solicitacao',
+        'observacao_responsavel',
     ];
-
 
     protected $casts = [
         'saida' => 'datetime',

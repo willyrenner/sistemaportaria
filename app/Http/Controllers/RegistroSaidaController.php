@@ -23,6 +23,7 @@ class RegistroSaidaController extends Controller
             'tipo' => 'required|string', // Adicione se entrada ou saída for relevante
             'saida' => 'nullable|date', // Pode ser nulo na criação
             'permissao' => 'nullable|boolean',
+            'observacao_responsavel' => 'nullable|string',
             'motivo' => $request->tipo === 'saida' ? 'required|string' : 'nullable|string',
         ], [
             'motivo.required' => 'O campo motivo é obrigatório para solicitações de saída.',
@@ -84,6 +85,7 @@ class RegistroSaidaController extends Controller
             'permissao' => $permissao, // Se for maior de idade, terá a data e hora atual
             'saida' => $permissao ? Carbon::now() : null, // Registra a saída se maior de idade
             'motivo' => $request->motivo ?? null,
+            'observacao_responsavel' => $request->observacao_responsavel ?? null,
             'solicitacao' => Carbon::now(),
         ]);
 
@@ -98,7 +100,7 @@ class RegistroSaidaController extends Controller
 
     public function index() // Listagem de registros
     {
-        $registros = RegistroSaida::with('aluno')->get();
+        $registros = RegistroSaida::with('aluno', 'funcionario')->get();
         return view('registros.index', compact('registros'));
     }
 
@@ -116,15 +118,23 @@ class RegistroSaidaController extends Controller
     }
 
 
-    public function confirmarSaida(RegistroSaida $registro)
+    public function confirmarSaida(Request $request, RegistroSaida $registro)
     {
         if (!$registro) {
             return redirect()->route('autorizar-menores')->with('error', 'Registro de saída não encontrado.');
         }
 
+        $validatedData = $request->validate([
+            'observacao_responsavel' => 'nullable|string|max:255',
+        ]);
+
+        $funcionario_id = Auth::guard('web')->user()->id;
+
         // Atualiza a saída para o horário atual
         $registro->saida = Carbon::now();
         $registro->permissao = "Autorizada";
+        $registro->observacao_responsavel = $validatedData['observacao_responsavel'] ?? null;
+        $registro->funcionario_id = $funcionario_id;
         $registro->save();
 
         return redirect()->route('autorizar-menores')->with('success', 'Saída confirmada com sucesso!');
