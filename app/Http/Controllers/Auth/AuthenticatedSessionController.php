@@ -80,9 +80,19 @@ class AuthenticatedSessionController extends Controller
             $matricula = isset($data['identificacao']) ? $data['identificacao'] : 'identificacao não disponível';
 
             // TO-DO: NÃO DEIXAR ALUNO ACESSAR O SISTEMA
-            if (strtolower(isset($data['tipo_usuario'])) === 'aluno') {
-                return redirect('/')->back()->with('error', 'Usuário não pode acessar o sistema!!!');
+            // if (strtolower(isset($data['tipo_usuario'])) === 'aluno') {
+            //     return redirect('/')->back()->with('error', 'Usuário não pode acessar o sistema!!!');
+            // }
+
+            $tipo_usuario = $data['tipo_usuario'];
+            $tipo_usuario_aluno = strtolower('Aluno');
+            $tipo_usuario_docente = strtolower('Servidor (Docente)');
+
+            // Mudar para validar aluno ao invés de docente
+            if (isset($data['tipo_usuario']) && strtolower($tipo_usuario) === $tipo_usuario_docente) {
+                return redirect('/')->with('error', 'Esse usuário não pode acessar o sistema!');
             }
+
 
             // Cria ou atualiza o usuário no banco
             $user = User::updateOrCreate(
@@ -97,8 +107,6 @@ class AuthenticatedSessionController extends Controller
 
             // Redireciona para o painel ou área restrita
             return redirect()->intended(route('dashboard', absolute: false));
-
         }
     }
-
 }

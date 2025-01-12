@@ -41,14 +41,44 @@
         </div>
 
         <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Seja Bem-Vindo</h1>
-        <p class="text-gray-400 text-center mb-6">Você não está autenticado</p>
+        <!-- <p class="text-yellow-400 text-center mb-6">Você não está autenticado</p> -->
+        <!-- <p class="bg-yellow-400 text-white p-4 rounded mb-4">Você não está autenticado</p>
+
+        @if($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded mb-4">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif -->
+
+        @if(Auth::check())
+            <p class="bg-green-400 text-white p-4 rounded mb-4">Você está autenticado</p>
+        @else
+            <p class="bg-yellow-400 text-white p-4 rounded mb-4">Você não está autenticado</p>
+        @endif
+
+        @if($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded mb-4">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @else
+            <!-- <p class="bg-blue-400 text-white p-4 rounded mb-4">Nenhum erro encontrado!</p> -->
+        @endif
+
 
         <!-- Botões de ação -->
-        <a class="block w-full bg-blue-600 text-white py-2 rounded mb-4 text-center" href="{{ route('autenticar') }}">
-            Entrar
-        </a>
-        <a class="block w-full bg-green-600 text-white py-2 rounded text-center" id="suap-login-button">
+        <a class="block w-full bg-green-600 text-white py-2 rounded text-center mb-4" id="suap-login-button">
             Fazer Login Suap
+        </a>
+        <a class="block w-full bg-blue-600 text-white py-2 rounded text-center" href="{{ route('autenticar') }}">
+            Entrar
         </a>
     </div>
 
