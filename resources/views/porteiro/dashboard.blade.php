@@ -11,7 +11,9 @@
 
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+        <a href="/porteiro/dashboard">
+            <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+        </a>
         <div class="flex items-center gap-4">
             <p class="text-lg">
                 Porteiro:
@@ -55,7 +57,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            
+
 
         </div>
 
@@ -74,25 +76,27 @@
                     </thead>
                     <tbody>
                         @forelse($movimentacoes as $movimentacao)
-                        <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
-                            <td class="px-4 py-2 border">{{ $movimentacao->aluno->nome }}</td>
-                            <td class="px-4 py-2 border">
-                                {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
-                            </td>
-                            <td class="px-4 py-2 border">
-                                {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
-                            </td>
-                            <td class="px-4 py-2 border">{{$movimentacao->saida ? date('d/m/Y - H:i', strtotime($movimentacao->saida )) : 'Pendente'}}</td>
-                        </tr>
+                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                <td class="px-4 py-2 border">{{ $movimentacao->aluno->nome }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    {{$movimentacao->saida ? date('d/m/Y - H:i', strtotime($movimentacao->saida)) : 'Pendente'}}
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td class="px-4 py-2 border">
-                                Nenhuma movimentação recente de alunos.
-                            </td>
-                            <td class="px-4 py-2 border">----</td>
-                            <td class="px-4 py-2 border">----</td>
-                            <td class="px-4 py-2 border">----</td>
-                        </tr>
+                            <tr>
+                                <td class="px-4 py-2 border">
+                                    Nenhuma movimentação recente de alunos.
+                                </td>
+                                <td class="px-4 py-2 border">----</td>
+                                <td class="px-4 py-2 border">----</td>
+                                <td class="px-4 py-2 border">----</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -169,9 +173,12 @@
             <h1 class="text-xl font-bold mb-4">MENU</h1>
             <a href="/porteiro/visitantes" class="text-green-600 hover:underline mb-4">HISTÓRICO DE VISITANTES</a>
             <a href="/porteiro/alunos" class="text-green-600 hover:underline mb-4">HISTÓRICO DE ALUNOS</a>
+            <h1 class="text-xl font-bold mb-4">BUSCAR ALUNO</h1>
             <div class="flex gap-2 w-full max-w-md">
-                <input type="text" class="border border-gray-300 rounded flex-1 px-4 py-2" placeholder="BUSCAR ALUNO">
-                <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">BUSCAR</button>
+                <input type="text" id="buscarMatricula" class="border border-gray-300 rounded flex-1 px-4 py-2"
+                    placeholder="INFORME A MATRICULA">
+                <button id="buscarAluno"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">BUSCAR</button>
             </div>
         </div>
     </div>
@@ -214,6 +221,26 @@
             </form>
         </div>
     </div>
+
+    <div id="alunoModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4 text-center">Informações do Aluno</h2>
+            <div id="alunoInfo">
+                <p><strong>Nome:</strong> <span id="alunoNome"></span></p>
+                <p><strong>Matrícula:</strong> <span id="alunoMatricula"></span></p>
+                <p><strong>Idade:</strong> <span id="alunoIdade"></span></p>
+                <p><strong>Responsável:</strong> <span id="alunoResponsavel"></span></p>
+                <p><strong>Curso:</strong> <span id="alunoCurso"></span></p>
+            </div>
+            <div class="flex justify-end mt-4">
+                <button id="alunoClose" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 <script>
@@ -330,7 +357,54 @@
             };
         });
     });
+</script>
 
+<script>
+    const alunoModal = document.getElementById('alunoModal');
+    const alunoClose = document.getElementById('alunoClose');
+    const buscarAluno = document.getElementById('buscarAluno');
+    const buscarMatricula = document.getElementById('buscarMatricula');
+
+    // Função para abrir o modal com informações do aluno
+    function abrirAlunoModal(info) {
+        document.getElementById('alunoNome').textContent = info.nome || 'Não informado';
+        document.getElementById('alunoMatricula').textContent = info.matricula || 'Não informado';
+        document.getElementById('alunoIdade').textContent = info.idade || 'Não informado';
+        document.getElementById('alunoResponsavel').textContent = info.responsavel || 'Não informado';
+        document.getElementById('alunoCurso').textContent = info.curso || 'Não informado';
+
+        alunoModal.classList.remove('hidden'); // Mostra o modal
+    }
+
+    // Função para buscar o aluno pela matrícula
+    async function buscarAlunoPelaMatricula() {
+        const matricula = buscarMatricula.value.trim();
+        if (!matricula) {
+            alert('Por favor, insira a matrícula.');
+            return;
+        }
+
+        try {
+            // Enviar requisição ao backend (ajuste a URL conforme necessário)
+            const response = await fetch(`/api/alunos/${matricula}`);
+            if (!response.ok) {
+                throw new Error('Aluno não encontrado.');
+            }
+
+            const aluno = await response.json();
+            abrirAlunoModal(aluno);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    // Adicionar evento ao botão de busca
+    buscarAluno.addEventListener('click', buscarAlunoPelaMatricula);
+
+    // Fechar o modal ao clicar no botão "Fechar"
+    alunoClose.addEventListener('click', function () {
+        alunoModal.classList.add('hidden'); // Esconde o modal
+    });
 </script>
 
 <script>

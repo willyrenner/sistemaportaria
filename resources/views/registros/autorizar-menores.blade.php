@@ -75,7 +75,7 @@
                             <tr>
                                 <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                 <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
-                                <td class="px-4 py-2 border">{{ $registro->solicitacao }}</td>
+                                <td class="px-4 py-2 border">{{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao )) : 'Pendente'}}</td>
                                 <td class="px-4 py-2 border">{{ $registro->motivo ?? 'N/A' }}</td>
                                 <td class="px-4 py-2 border">
                                     <form action="{{ route('registros.confirmar-saida', $registro->id) }}" method="POST">

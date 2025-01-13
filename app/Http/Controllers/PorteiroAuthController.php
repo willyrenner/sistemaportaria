@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\RegistroSaida;
 use App\Models\CadastrarVisitante;
+use App\Models\Aluno;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
@@ -256,6 +257,17 @@ class PorteiroAuthController extends Controller
         return redirect()->route('porteiros.index')->with('success', 'Porteiro atualizado com sucesso!');
     }
 
+    public function resetPassword($id)
+    {
+        // Encontrar o porteiro e atualizar os dados
+        $porteiro = Porteiro::findOrFail($id);
+        $porteiro->password = Hash::make($porteiro->cpf);
+        $porteiro->password_reset_required = 1;
+        $porteiro->save();
+
+        return redirect()->route('porteiros.index')->with('success', 'Senha do porteiro resetada com sucesso!');
+    }
+
     public function destroy($id)
     {
         // Encontre o porteiro pelo ID
@@ -279,6 +291,28 @@ class PorteiroAuthController extends Controller
         $porteiro->save();
 
         return redirect()->route('porteiro.dashboard')->with('success', 'Senha atualizada com sucesso!');
+    }
+
+    public function buscarAluno($matricula)
+    {
+        // Tenta buscar o aluno pela matrícula
+        $aluno = Aluno::where('matricula', $matricula)->with(['responsavel', 'curso'])->first();
+
+        // Verifica se encontrou o aluno
+        if ($aluno) {
+            // Retorna os dados do aluno como JSON
+            $idade = Carbon::parse($aluno->data_nascimento)->age;
+            return response()->json([
+                'nome' => $aluno->nome,
+                'matricula' => $aluno->matricula,
+                'idade' => $idade,
+                'responsavel' => $aluno->responsavel->nome,
+                'curso' => $aluno->curso->curso,
+            ]);
+        } else {
+            // Caso não encontre o aluno, retorna erro 404
+            return response()->json(['message' => 'Aluno não encontrado.'], 404);
+        }
     }
 
 

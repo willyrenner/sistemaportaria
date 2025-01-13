@@ -102,6 +102,14 @@
                                                 Excluir
                                             </button>
                                         </form>
+
+                                        <form action="{{ route('porteiros.resetpassword', $porteiro->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja resetar a senha do porteiro?');">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+                                                Resetar Senha
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
 

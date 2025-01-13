@@ -11,7 +11,9 @@
 
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+        <a href="/porteiro/dashboard">
+            <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+        </a>
         <div class="flex items-center gap-4">
             <p class="text-lg">
                 Porteiro:
@@ -26,12 +28,18 @@
         </div>
     </header>
 
-    <div class="py-12 bg-gray-800 min-h-screen">
+    <div class="flex justify-start px-6 py-4">
+        <a href="/porteiro/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">
+            Voltar para o Dashboard
+        </a>
+    </div>
+
+    <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
                 <!-- Listagem de Registros de Entrada -->
-                <div id="lista-entradas" class="bg-gray-800 p-4 rounded shadow-lg mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 text-center">Registros de Entrada</h2>
+                <div id="lista-entradas" class="p-4 rounded shadow-lg mb-6">
+                    <h2 class="text-2xl text-black font-bold mb-4 text-center">REGISTROS DE ENTRADA</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full table-auto border-collapse border border-gray-200">
                             <thead>
@@ -48,8 +56,12 @@
                                     <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->aluno->matricula }}</td>
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->aluno->nome }}</td>
-                                        <td class="px-4 py-2 border text-gray-800">{{ $registro->tipo }}</td>
-                                        <td class="px-4 py-2 border text-gray-800">{{ $registro->solicitacao }}</td>
+                                        <td class="px-4 py-2 border text-gray-800">
+                                            {{ $registro->tipo ? 'Entrada' : 'Pendente' }}
+                                        </td>
+                                        <td class="px-4 py-2 border text-gray-800">
+                                            {{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao)) : 'Pendente'}}
+                                        </td>
                                         <td class="px-4 py-2 border text-gray-800">
                                             {{ $registro->permissao ?? 'Aguardando autorização' }}
                                         </td>
@@ -62,8 +74,8 @@
                 </div>
 
                 <!-- Listagem de Registros de Saída -->
-                <div id="lista-saidas" class="bg-gray-800 p-4 rounded shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4 text-center">Registros de Saída</h2>
+                <div id="lista-saidas" class="bg-white p-4 rounded shadow-lg">
+                    <h2 class="text-2xl text-black font-bold mb-4 text-center">REGISTROS DE SAÍDA</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full table-auto border-collapse border border-gray-200">
                             <thead>
@@ -82,9 +94,15 @@
                                     <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->aluno->matricula }}</td>
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->aluno->nome }}</td>
-                                        <td class="px-4 py-2 border text-gray-800">{{ $registro->tipo }}</td>
-                                        <td class="px-4 py-2 border text-gray-800">{{ $registro->solicitacao }}</td>
-                                        <td class="px-4 py-2 border text-gray-800">{{ $registro->saida ?? 'Pendente' }}</td>
+                                        <td class="px-4 py-2 border text-gray-800">
+                                            {{ $registro->tipo ? 'Saída' : 'Pendente'}}
+                                        </td>
+                                        <td class="px-4 py-2 border text-gray-800">
+                                            {{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao)) : 'Pendente'}}
+                                        </td>
+                                        <td class="px-4 py-2 border text-gray-800">
+                                            {{$registro->saida ? date('d/m/Y - H:i', strtotime($registro->saida)) : 'Pendente'}}
+                                        </td>
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->motivo ?? 'N/A' }}</td>
                                         <td class="px-4 py-2 border text-gray-800">
                                             {{ $registro->permissao ?? 'Aguardando autorização' }}

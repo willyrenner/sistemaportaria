@@ -59,6 +59,7 @@ Route::get('/registros/visitantes', [PorteiroAuthController::class, 'registros']
 
 Route::get('/porteiro/visitantes', [PorteiroAuthController::class, 'registrosVisitantes'])->name('porteiro.visitantes');
 Route::get('/porteiro/alunos', [PorteiroAuthController::class, 'registrosAlunos'])->name('porteiro.index');
+Route::get('/api/alunos/{matricula}', [PorteiroAuthController::class, 'buscarAluno']);
 
 Route::prefix('porteiros')->group(function () {
     Route::get('create', [PorteiroAuthController::class, 'create'])->name('porteiros.create');
@@ -89,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/porteiros', [PorteiroAuthController::class, 'index'])->name('porteiros.index');
     Route::get('porteiros/{id}/edit', [PorteiroAuthController::class, 'edit'])->name('porteiros.edit');
     Route::put('porteiros/{id}', [PorteiroAuthController::class, 'update'])->name('porteiros.update');
+    Route::put('porteiros/{id}/resetpassoword', [PorteiroAuthController::class, 'resetPassword'])->name('porteiros.resetpassword');
     Route::delete('porteiros/{id}', [PorteiroAuthController::class, 'destroy'])->name('porteiros.destroy');
 
     // ROTAS ALUNOS
