@@ -18,11 +18,7 @@ use Exception;
 class PorteiroAuthController extends Controller
 {
 
-    public function registros() // Listagem de registros
-    {
-        $registros = CadastrarVisitante::all();
-        return view('registros.visitantes', compact('registros'));
-    }
+    
 
     public function registrosVisitantes() // Listagem de registros
     {

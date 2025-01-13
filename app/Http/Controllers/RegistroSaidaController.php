@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RegistroSaida;
 use App\Models\Aluno;
+use App\Models\CadastrarVisitante;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class RegistroSaidaController extends Controller
 {
+    public function registros() // Listagem de registros
+    {
+        $registros = CadastrarVisitante::all();
+        return view('registros.visitantes', compact('registros'));
+    }
+
     public function create()
     {
         return view('registros.create');

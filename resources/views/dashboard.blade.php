@@ -18,7 +18,7 @@
                                     DE MENORES</a></li>
                             <li><a href="/registros" class="text-lg block hover:text-green-500">HISTÓRICO DE
                                     SAÍDAS/ENTRADAS</a></li>
-                            <li><a href="/registros/visitantes" class="text-lg block hover:text-green-500">HISTÓRICO DE
+                            <li><a href="/registros-visitantes" class="text-lg block hover:text-green-500">HISTÓRICO DE
                                     VISITANTES</a></li>
                             <li><a href="/porteiros" class="text-lg block hover:text-green-500">MENU PORTEIROS</a></li>
                             <li><a href="/cursos" class="text-lg block hover:text-green-500">MENU CURSOS</a></li>
