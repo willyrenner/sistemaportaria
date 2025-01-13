@@ -1,28 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col items-start ">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl leading-tight">
                 {{ __('Registro de Saídas e Entradas de Visitantes') }}
             </h2>
             <a href="{{ route('dashboard') }}"
-                class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 inline-block">
+                class="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600 inline-block">
                 Voltar ao Dashboard
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-gray-800 min-h-screen">
+    <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-gray-900 text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
 
 
                 <!-- Listagem de Registros de Entrada -->
-                <div id="lista-entradas" class="bg-gray-800 p-4 rounded shadow-lg mb-6">
+                <div id="lista-entradas" class="text-black p-4 rounded shadow-lg mb-6">
                     <h2 class="text-2xl font-semibold mb-4">Registros de Entrada</h2>
-                    <table class="w-full table-auto border-collapse">
+                    <table class="table-auto w-full border-collapse border border-gray-200">
                         <thead>
-                            <tr>
+                            <tr class="bg-green-600 text-white">
                                 <th class="px-4 py-2 text-left border">Nome</th>
                                 <th class="px-4 py-2 text-left border">CPF</th>
                                 <th class="px-4 py-2 text-left border">Tipo</th>
@@ -31,11 +31,11 @@
                         </thead>
                         <tbody>
                             @foreach($registros->where('tipo', 'entrada') as $registro)
-                                <tr>
-                                    <td class="px-4 py-2 border">{{ $registro->nome }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->cpf }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->tipo }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->created_at }}</td>
+                                <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                    <td class="px-4 py-2 border text-black">{{ $registro->nome }}</td>
+                                    <td class="px-4 py-2 border text-black">{{ $registro->cpf }}</td>
+                                    <td class="px-4 py-2 border text-black">{{ $registro->tipo }}</td>
+                                    <td class="px-4 py-2 border text-black">{{ $registro->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -43,11 +43,11 @@
                 </div>
 
                 <!-- Listagem de Registros de Saída -->
-                <div id="lista-saidas" class="bg-gray-800 p-4 rounded shadow-lg">
+                <div id="lista-saidas" class="text-black p-4 rounded shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Registros de Saída</h2>
                     <table class="w-full table-auto border-collapse">
                         <thead>
-                            <tr>
+                            <tr class="bg-green-600 text-white">
                                 <th class="px-4 py-2 text-left border">Nome</th>
                                 <th class="px-4 py-2 text-left border">CPF</th>
                                 <th class="px-4 py-2 text-left border">Tipo</th>
@@ -56,17 +56,17 @@
                         </thead>
                         <tbody>
                             @foreach($registros as $registro)
-                                <tr>
-                                    <td class="px-4 py-2 border">{{ $registro->nome }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->cpf }}</td>
-                                    <td class="px-4 py-2 border">
+                                <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                    <td class="px-4 py-2 border text-black">{{ $registro->nome }}</td>
+                                    <td class="px-4 py-2 border text-black">{{ $registro->cpf }}</td>
+                                    <td class="px-4 py-2 border text-black">
                                         @if(is_null($registro->saida))
                                             <span class="text-red-600">Pendente</span>
                                         @elseif ($registro->saida)
                                             <span>Saída</span>
                                         @endif
                                     </td>
-                                    <td class="px-4 py-2 border">
+                                    <td class="px-4 py-2 border text-black">
                                         @if(is_null($registro->saida))
                                             <span class="text-red-600">Saída não registrada</span>
                                         @else

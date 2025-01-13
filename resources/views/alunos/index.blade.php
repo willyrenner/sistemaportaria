@@ -1,18 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col items-start ">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl leading-tight">
                 {{ __('Menu de Alunos') }}
             </h2>
-            <a href="{{ route('dashboard') }}" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 inline-block">
+            <a href="{{ route('dashboard') }}" class="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600 inline-block">
                 Voltar ao Dashboard
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-gray-800 min-h-screen">
+    <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
 
                 @if(session('success'))
                     <div class="bg-green-500 text-white p-4 rounded mb-4">
@@ -30,10 +30,10 @@
                     </div>
                 @endif
 
-                <button onclick="toggleForm()" class="w-full bg-blue-500 px-4 py-2 rounded mb-6 hover:bg-blue-600">Novo Cadastro</button>
+                <button onclick="toggleForm()" class="w-full bg-green-500 px-4 py-2 rounded mb-6 hover:bg-green-600">Novo Cadastro</button>
 
-                <div id="cadastro-aluno" class="bg-gray-800 p-4 rounded shadow-lg mb-6 hidden">
-                    <h2 class="text-2xl font-semibold mb-4">CADASTRO DE ALUNO</h2>
+                <div id="cadastro-aluno" class=" bg-white p-4 rounded shadow-lg mb-6 hidden">
+                    <h2 class="text-2xl text-black font-semibold mb-4">CADASTRO DE ALUNO</h2>
                     <form action="{{ route('alunos.store') }}" method="POST">
                         @csrf
                         <div class="space-y-3">
@@ -66,11 +66,11 @@
                     </form>
                 </div>
 
-                <div id="lista-alunos" class="bg-gray-800 p-4 rounded shadow-lg">
+                <div id="lista-alunos" class="bg-white text-black p-4 rounded shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Lista de Alunos</h2>
-                    <table class="w-full table-auto border-collapse">
+                    <table class="table-auto w-full border-collapse border border-gray-200">
                         <thead>
-                            <tr>
+                            <tr class="bg-green-600 text-white">
                                 <th class="px-4 py-2 text-left border">Matrícula</th>
                                 <th class="px-4 py-2 text-left border">Nome</th>
                                 <th class="px-4 py-2 text-left border">Email</th>
@@ -79,7 +79,7 @@
                         </thead>
                         <tbody>
                             @foreach($alunos as $aluno)
-                                <tr>
+                                <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                     <td class="px-4 py-2 border">{{ $aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->email }}</td>

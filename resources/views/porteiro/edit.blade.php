@@ -1,18 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col items-start ">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl leading-tight">
                 {{ __('Porteiros Cadastrados') }}
             </h2>
-            <a href="{{ route('dashboard') }}" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 inline-block">
+            <a href="{{ route('dashboard') }}" class="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600 inline-block">
                 Voltar ao Dashboard
             </a>
         </div>
     </x-slot>
 
-    <div class="py-8 bg-gray-800 min-h-screen">
+    <div class="py-8 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
 
                 <!-- Exibição de Mensagens -->
                 @if(session('success'))
@@ -32,11 +32,11 @@
                 @endif
 
                 <!-- Botão para Exibir o Formulário de Cadastro -->
-                <button onclick="toggleCadastroForm()" class="w-full bg-blue-500 px-4 py-2 rounded mb-6 hover:bg-blue-600">Novo Cadastro</button>
+                <button onclick="toggleCadastroForm()" class="w-full bg-green-500 px-4 py-2 rounded mb-6 hover:bg-green-600">Novo Cadastro</button>
 
                 <!-- Formulário de Cadastro (Iniciado como oculto) -->
-                <div id="cadastro-porteiros" class="bg-gray-800 p-4 rounded shadow-lg mb-6 hidden">
-                    <h2 class="text-2xl font-semibold mb-4">CADASTRO DE PORTEIROS</h2>
+                <div id="cadastro-porteiros" class="bg-white p-4 rounded shadow-lg mb-6 hidden">
+                    <h2 class="text-2xl text-black font-semibold mb-4">CADASTRO DE PORTEIROS</h2>
                     <form action="{{ route('porteiros.store') }}" method="POST">
                         @csrf
                         <div class="space-y-3">
@@ -60,7 +60,7 @@
                                 </select>
                             </div>
                             <!-- Botão de Enviar -->
-                            <button type="submit" class="w-full bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                            <button type="submit" class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
                                 CADASTRAR
                             </button>
                         </div>
@@ -69,26 +69,26 @@
 
                 <!-- Tabela de Porteiros -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-gray-800 border border-gray-700">
+                    <table class="table-auto w-full border-collapse border border-gray-200">
                         <thead>
-                            <tr class="bg-gray-700">
-                                <th class="px-4 py-2 text-left border-b">Nome</th>
-                                <th class="px-4 py-2 text-left border-b">Email</th>
-                                <th class="px-4 py-2 text-left border-b">CPF</th>
-                                <th class="px-4 py-2 text-left border-b">Matrícula</th>
-                                <th class="px-4 py-2 text-left border-b">Turno</th>
-                                <th class="px-4 py-2 text-left border-b">Ações</th>
+                        <tr class="bg-green-600 text-white">
+                                <th class="px-4 py-2 text-left border">Nome</th>
+                                <th class="px-4 py-2 text-left border">Email</th>
+                                <th class="px-4 py-2 text-left border">CPF</th>
+                                <th class="px-4 py-2 text-left border">Matrícula</th>
+                                <th class="px-4 py-2 text-left border">Turno</th>
+                                <th class="px-4 py-2 text-left border">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($porteiros as $porteiro)
-                                <tr class="hover:bg-gray-700 border-b">
-                                    <td class="px-4 py-2">{{ $porteiro->name }}</td>
-                                    <td class="px-4 py-2">{{ $porteiro->email }}</td>
-                                    <td class="px-4 py-2">{{ $porteiro->cpf }}</td>
-                                    <td class="px-4 py-2">{{ $porteiro->matricula }}</td>
-                                    <td class="px-4 py-2">{{ $porteiro->turno ?? 'Nenhum' }}</td>
-                                    <td class="px-4 py-2 flex space-x-2 justify-start">
+                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                    <td class="px-4 py-2 text-black border">{{ $porteiro->name }}</td>
+                                    <td class="px-4 py-2 text-black border">{{ $porteiro->email }}</td>
+                                    <td class="px-4 py-2 text-black border">{{ $porteiro->cpf }}</td>
+                                    <td class="px-4 py-2 text-black border">{{ $porteiro->matricula }}</td>
+                                    <td class="px-4 py-2 text-black border">{{ $porteiro->turno ?? 'Nenhum' }}</td>
+                                    <td class="px-4 py-2 flex space-x-2 justify-start border">
                                         <!-- Botão Editar -->
                                         <button onclick="toggleEditForm({{ $porteiro->id }})" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                                             Editar

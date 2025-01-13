@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col items-start">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl leading-tight">
                 {{ __('Autorizar Saídas de Menores') }}
             </h2>
             <a href="{{ route('dashboard') }}"
-                class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 inline-block">
+                class="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600 inline-block">
                 Voltar ao Dashboard
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-gray-800 min-h-screen">
+    <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white p-4 rounded-lg shadow-lg overflow-hidden sm:rounded-lg p-6">
                 @if(session('success'))
                     <div class="bg-green-500 text-white p-4 rounded mb-4">
                         {{ session('success') }}
@@ -33,12 +33,13 @@
                 @endif
 
                 <!-- Botão para novo registro -->
-                <button onclick="toggleForm()" class="w-full bg-blue-500 px-4 py-2 rounded mb-6 hover:bg-blue-600">
+                <button onclick="toggleForm()"
+                    class="w-full bg-green-500 text-white px-4 py-2 rounded mb-6 hover:bg-green-600">
                     Novo Registro
                 </button>
 
                 <!-- Formulário de Registro de Saída -->
-                <div id="cadastro-saida" class="bg-gray-800 p-4 rounded shadow-lg mb-6 hidden">
+                <div id="cadastro-saida" class="bg-white p-4 rounded shadow-lg mb-6 hidden">
                     <h2 class="text-2xl font-semibold mb-4">Registrar Saída</h2>
 
                     <form action="{{ route('registros.store') }}" method="POST">
@@ -52,7 +53,7 @@
                             <input type="hidden" name="tipo" value="saida">
 
                             <!-- Botão de Enviar -->
-                            <button type="submit" class="w-full bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                            <button type="submit" class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
                                 Registrar
                             </button>
                         </div>
@@ -60,9 +61,9 @@
                 </div>
 
                 <h2 class="text-2xl font-semibold mb-4">Saídas Pendentes de Menores</h2>
-                <table class="w-full table-auto border-collapse">
+                <table class="table-auto w-full border-collapse border border-gray-200">
                     <thead>
-                        <tr>
+                        <tr class="bg-green-600 text-white">
                             <th class="px-4 py-2 text-left border">Matrícula</th>
                             <th class="px-4 py-2 text-left border">Nome</th>
                             <th class="px-4 py-2 text-left border">Data de Solicitação</th>
@@ -72,10 +73,12 @@
                     </thead>
                     <tbody>
                         @forelse($registrosPendentes as $registro)
-                            <tr>
+                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                 <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                 <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
-                                <td class="px-4 py-2 border">{{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao )) : 'Pendente'}}</td>
+                                <td class="px-4 py-2 border">
+                                    {{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao)) : 'Pendente'}}
+                                </td>
                                 <td class="px-4 py-2 border">{{ $registro->motivo ?? 'N/A' }}</td>
                                 <td class="px-4 py-2 border">
                                     <form action="{{ route('registros.confirmar-saida', $registro->id) }}" method="POST">
