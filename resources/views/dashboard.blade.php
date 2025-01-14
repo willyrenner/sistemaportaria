@@ -56,7 +56,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         <form action="{{ route('porteiros.store') }}" method="POST">
                             @csrf
                             <div class="space-y-3">
@@ -89,7 +89,8 @@
                                 </div>
 
                                 <!-- Botão de Enviar -->
-                                <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                <button type="submit"
+                                    class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                                     CADASTRAR
                                 </button>
                             </div>
@@ -99,23 +100,25 @@
                     <!-- Movimentações Recentes -->
                     <div id="movimentacoes-recentes" class="bg-white p-4 rounded-lg shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4 text-black-700">MOVIMENTAÇÕES RECENTES</h2>
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <!-- <div class="grid grid-cols-2 gap-4 mb-4">
                             <button class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">DATA</button>
                             <button class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">NOME</button>
                             <button class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">SEXO</button>
                             <button class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">+18/-18</button>
                             <button
                                 class="col-span-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">FILTRAR</button>
-                        </div>
-                        @foreach($movimentacoes as $movimentacao)
+                        </div> -->
+                        @forelse($movimentacoes as $movimentacao)
                             <div class="text-black mb-4">
                                 <p class="font-semibold">{{ $movimentacao->aluno->nome }}</p>
                                 <p class="text-gray-600">{{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}</p>
                                 <p class="text-gray-600">
                                     {{ $movimentacao->permissao ? 'Autorizado' : 'Pendente' }}
                                 </p>
+                        @empty
+                                <p class="text-gray-600">Nenhuma movimentação recente no momento!</p>
                             </div>
-                        @endforeach
+                        @endforelse
                     </div>
 
                     <div id="alunoModal"
