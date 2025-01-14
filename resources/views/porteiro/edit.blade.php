@@ -95,20 +95,22 @@
                                         </button>
 
                                         <!-- Formulário para Excluir -->
-                                        <form action="{{ route('porteiros.destroy', $porteiro->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este porteiro?');">
+                                        <form action="{{ route('porteiros.destroy', $porteiro->id) }}" method="POST"
+                                            class="inline-block ml-2"
+                                            onsubmit="event.preventDefault(); confirmDelete(this, '{{ $porteiro->name }}');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                                                Excluir
-                                            </button>
+                                            <button type="submit"
+                                                class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">Excluir</button>
                                         </form>
 
-                                        <form action="{{ route('porteiros.resetpassword', $porteiro->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja resetar a senha do porteiro?');">
+                                        <form action="{{ route('porteiros.resetpassword', $porteiro->id) }}" method="POST"
+                                            class="inline-block ml-2"
+                                            onsubmit="event.preventDefault(); confirmPassword(this, '{{ $porteiro->name }}');">
                                             @csrf
                                             @method('PUT')
-                                            <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
-                                                Resetar Senha
-                                            </button>
+                                            <button type="submit"
+                                                class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Resetar Senha</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -126,7 +128,7 @@
                                                 <input type="text" name="matricula" value="{{ $porteiro->matricula }}" class="w-full px-4 py-2 rounded text-black bg-white" required>
 
                                                 <!-- Turno - Select Box com valores de turno -->
-                                                <div class="space-y-2">
+                                                <div class="space-y-2 text-black">
                                                     <label class="block">
                                                         <input type="radio" name="turno" value="matutino"
                                                             {{ $porteiro->turno === 'matutino' ? 'checked' : '' }} class="mr-2"> MATUTINO
@@ -143,7 +145,7 @@
 
                                                 <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Salvar</button>
                                                 <button type="button" onclick="toggleEditForm({{ $porteiro->id }})"
-                                                    class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancelar</button>
+                                                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Cancelar</button>
                                             </div>
                                         </form>
                                     </td>
@@ -152,11 +154,72 @@
                         </tbody>
                     </table>
                 </div>
+                <div id="confirmModal"
+                    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+                    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                        <h2 class="text-xl text-black font-bold mb-4 text-center" id="confirmMessage">Confirmando...
+                        </h2>
+                        <div class="flex justify-between">
+                            <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                                Sim
+                            </button>
+                            <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                                Não
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        let deleteForm; 
+
+        function confirmDelete(form, porteiroNome) {
+            deleteForm = form; // Salva o formulário que será enviado
+            const modal = document.getElementById('confirmModal');
+            const message = document.getElementById('confirmMessage');
+            message.textContent = `Tem certeza de que deseja excluir o porteiro ${porteiroNome}?`;
+            modal.classList.remove('hidden');
+        }
+
+        // Fecha o modal sem realizar a ação
+        document.getElementById('confirmCancel').addEventListener('click', function () {
+            const modal = document.getElementById('confirmModal');
+            modal.classList.add('hidden');
+        });
+
+        // Confirma a exclusão e envia o formulário
+        document.getElementById('confirmOk').addEventListener('click', function () {
+            if (deleteForm) {
+                deleteForm.submit(); // Submete o formulário de exclusão
+            }
+        });
+
+        let resetPassword; 
+        
+        function confirmPassword(form, porteiroNome) {
+            resetPassword = form; // Salva o formulário que será enviado
+            const modal = document.getElementById('confirmModal');
+            const message = document.getElementById('confirmMessage');
+            message.textContent = `Tem certeza de que deseja resetar a senha do porteiro ${porteiroNome}?`;
+            modal.classList.remove('hidden');
+        }
+
+        // Fecha o modal sem realizar a ação
+        document.getElementById('confirmCancel').addEventListener('click', function () {
+            const modal = document.getElementById('confirmModal');
+            modal.classList.add('hidden');
+        });
+
+        // Confirma a exclusão e envia o formulário
+        document.getElementById('confirmOk').addEventListener('click', function () {
+            if (resetPassword) {
+                resetPassword.submit(); // Submete o formulário de exclusão
+            }
+        });
+
         // Função para alternar a exibição do formulário de edição
         function toggleEditForm(id) {
             var form = document.getElementById('edit-form-' + id);

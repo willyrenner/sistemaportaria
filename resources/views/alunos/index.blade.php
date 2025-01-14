@@ -86,11 +86,12 @@
                                     <td class="px-4 py-2 border">
                                         <button onclick="showEditForm({{ $aluno->id }})"
                                             class="bg-yellow-500 px-4 py-2 rounded text-white hover:bg-yellow-600">Editar</button>
-                                        <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block ml-2">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">Excluir</button>
-                                        </form>
+                                            <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block ml-2"
+                                                onsubmit="event.preventDefault(); confirmDelete(this, '{{ $aluno->nome}}', '{{$aluno->matricula}}');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">Excluir</button>
+                                            </form>
                                     </td>
                                 </tr>
 
@@ -99,7 +100,7 @@
                                         <form action="{{ route('alunos.update', $aluno->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <div class="bg-gray-800 p-4 rounded shadow-lg">
+                                            <div class="bg-white p-4 rounded shadow-lg">
                                                 <div class="space-y-3">
                                                     <input type="text" name="matricula" value="{{ $aluno->matricula }}" 
                                                         class="w-full px-3 py-2 rounded text-black" required>
@@ -129,7 +130,7 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    <button type="submit" class="w-full bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                                                    <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                                                         Atualizar
                                                     </button>
                                                 </div>
@@ -144,9 +145,47 @@
 
             </div>
         </div>
+            <!-- Modal de Confirmação -->
+        <div id="confirmModal"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Confirmando...</h2>
+                <div class="flex justify-between">
+                    <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                        Sim
+                    </button>
+                    <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                        Não
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-
     <script>
+    let deleteForm; // Variável para armazenar o formulário de exclusão
+
+    // Exibe o modal de confirmação
+    function confirmDelete(form, alunoNome, alunoMatricula) {
+        deleteForm = form; // Salva o formulário que será enviado
+        const modal = document.getElementById('confirmModal');
+        const message = document.getElementById('confirmMessage');
+        message.textContent = `Tem certeza de que deseja excluir o aluno ${alunoNome} (${alunoMatricula}) ?`;
+        modal.classList.remove('hidden');
+    }
+
+    // Fecha o modal sem realizar a ação
+    document.getElementById('confirmCancel').addEventListener('click', function () {
+        const modal = document.getElementById('confirmModal');
+        modal.classList.add('hidden');
+    });
+
+    // Confirma a exclusão e envia o formulário
+    document.getElementById('confirmOk').addEventListener('click', function () {
+        if (deleteForm) {
+            deleteForm.submit(); // Submete o formulário de exclusão
+        }
+    });
+
 
         function toggleForm() {
             const form = document.getElementById('cadastro-aluno');

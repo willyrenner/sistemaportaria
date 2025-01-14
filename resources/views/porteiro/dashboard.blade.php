@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="shortcut icon" type="imagex/png" href="imagens/ifrn-logo.ico">
     <title>PAINEL PORTEIRO</title>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-        <a href="/porteiro/dashboard">
+
+        <a href="/porteiro-dashboard" class="flex items-center gap-12">
+            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
             <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
         </a>
         <div class="flex items-center gap-4">
@@ -27,6 +28,8 @@
             </form>
         </div>
     </header>
+
+    <h1 class="font-semibold text-xl leading-tight m-12 mt-4">Painel Porteiro</h1>
 
     <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
         <!-- Solicitar Aluno -->
@@ -57,7 +60,6 @@
                     {{ session('status') }}
                 </div>
             @endif
-
 
         </div>
 
@@ -114,13 +116,20 @@
                 <input type="number" name="cpf" class="border border-gray-300 rounded px-4 py-2" placeholder="CPF"
                     required>
                 <input type="text" name="tipo" value="entrada" required hidden>
-                <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
+                <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO"
+                    minlength="5" required>
                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">ENVIAR</button>
             </form>
 
             @if(session('status_visitante'))
                 <div class="mt-4 text-center text-xl font-semibold text-green-600">
                     {{ session('status_visitante') }}
+                </div>
+            @endif
+
+            @if($errors->has('motivoVisitante'))
+                <div class="text-red-600 text-sm mt-2">
+                    {{ $errors->first('motivoVisitante') }}
                 </div>
             @endif
 
@@ -171,8 +180,8 @@
         <!-- Menu -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MENU</h1>
-            <a href="/porteiro/visitantes" class="text-green-600 hover:underline mb-4">HISTÓRICO DE VISITANTES</a>
-            <a href="/porteiro/alunos" class="text-green-600 hover:underline mb-4">HISTÓRICO DE ALUNOS</a>
+            <a href="/porteiro-visitantes" class="text-green-600 hover:underline mb-4">HISTÓRICO DE VISITANTES</a>
+            <a href="/porteiro-alunos" class="text-green-600 hover:underline mb-4">HISTÓRICO DE ALUNOS</a>
             <h1 class="text-xl font-bold mb-4">BUSCAR ALUNO</h1>
             <div class="flex gap-2 w-full max-w-md">
                 <input type="text" id="buscarMatricula" class="border border-gray-300 rounded flex-1 px-4 py-2"

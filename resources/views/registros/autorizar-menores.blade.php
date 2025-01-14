@@ -113,10 +113,9 @@
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Confirmando ação...</h2>
             <div class="flex flex-col gap-4 justify-between">
-
                 <!-- Campo Observação -->
                 <input type="text" name="observacao_responsavel" id="observacao_responsavel" placeholder="Observação"
-                    class="hidden w-full px-3 py-2 border rounded text-black" />
+                    class="hidden w-full px-3 py-2 border rounded text-black" required />
 
                 <div class="flex justify-between">
                     <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">

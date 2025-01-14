@@ -14,27 +14,29 @@
     <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
-                <button onclick="toggleForm()" class="w-full bg-green-500 px-4 py-2 rounded mb-6 hover:bg-green-600">Novo
+                @if(session('success'))
+                    <div class="bg-green-500 text-white p-4 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="bg-red-500 text-white p-4 rounded mb-4">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <button onclick="toggleForm()"
+                    class="w-full bg-green-500 px-4 py-2 rounded mb-6 hover:bg-green-600">Novo
                     Cadastro</button>
 
                 <div id="cadastro-responsavel" class="text-black p-4 rounded shadow-lg mb-6 hidden">
                     <h2 class="text-2xl text-black font-semibold mb-4">CADASTRO DE RESPONSÁVEL</h2>
 
-                    @if(session('success'))
-                        <div class="bg-green-500 text-white p-4 rounded mb-4">
-                            {{ session('success') }}
-                        </div>
-                    @endif
 
-                    @if($errors->any())
-                        <div class="bg-red-500 text-white p-4 rounded mb-4">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
                     <form action="{{ route('responsaveis.store') }}" method="POST">
                         @csrf
@@ -45,7 +47,8 @@
                             <input type="text" name="telefone" placeholder="TELEFONE DO RESPONSÁVEL"
                                 class="w-full px-3 py-2 rounded text-black" required>
 
-                            <button type="submit" class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                            <button type="submit"
+                                class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
                                 CADASTRAR
                             </button>
                         </div>
@@ -64,7 +67,7 @@
                         </thead>
                         <tbody>
                             @foreach($responsaveis as $responsavel)
-                            <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
+                                <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                     <td class="px-4 py-2 border">{{ $responsavel->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $responsavel->telefone }}</td>
                                     <td class="px-4 py-2 border flex space-x-2 justify-start">
@@ -74,13 +77,12 @@
                                         </button>
 
                                         <form action="{{ route('responsaveis.destroy', $responsavel->id) }}" method="POST"
-                                            onsubmit="return confirm('Tem certeza que deseja excluir este responsável?');">
+                                            class="inline-block ml-2"
+                                            onsubmit="event.preventDefault(); confirmDelete(this, '{{ $responsavel->nome }}');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                                                Excluir
-                                            </button>
+                                                class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">Excluir</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -98,12 +100,12 @@
                                                     class="w-full px-3 py-2 rounded text-black" required>
 
                                                 <button type="submit"
-                                                    class="w-full bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                                                    class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                                                     Atualizar
                                                 </button>
 
                                                 <button type="button" onclick="toggleEditForm({{ $responsavel->id }})"
-                                                    class="w-full bg-gray-500 px-4 py-2 rounded hover:bg-gray-600">
+                                                    class="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
                                                     Cancelar
                                                 </button>
                                             </div>
@@ -114,12 +116,51 @@
                         </tbody>
                     </table>
                 </div>
-
+                <div id="confirmModal"
+                    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+                    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                        <h2 class="text-xl text-black font-bold mb-4 text-center" id="confirmMessage">Confirmando...
+                        </h2>
+                        <div class="flex justify-between">
+                            <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                                Sim
+                            </button>
+                            <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                                Não
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        let deleteForm; // Variável para armazenar o formulário de exclusão
+
+        // Exibe o modal de confirmação
+        function confirmDelete(form, responsavelNome) {
+            deleteForm = form; // Salva o formulário que será enviado
+            const modal = document.getElementById('confirmModal');
+            const message = document.getElementById('confirmMessage');
+            message.textContent = `Tem certeza de que deseja excluir o responsável ${responsavelNome}?`;
+            modal.classList.remove('hidden');
+        }
+
+        // Fecha o modal sem realizar a ação
+        document.getElementById('confirmCancel').addEventListener('click', function () {
+            const modal = document.getElementById('confirmModal');
+            modal.classList.add('hidden');
+        });
+
+        // Confirma a exclusão e envia o formulário
+        document.getElementById('confirmOk').addEventListener('click', function () {
+            if (deleteForm) {
+                deleteForm.submit(); // Submete o formulário de exclusão
+            }
+        });
+
+
         function toggleForm() {
             const form = document.getElementById('cadastro-responsavel');
             form.classList.toggle('hidden');

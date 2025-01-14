@@ -11,7 +11,9 @@
 
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-        <a href="/porteiro/dashboard">
+
+        <a href="/porteiro-dashboard" class="flex items-center gap-12">
+            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
             <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
         </a>
         <div class="flex items-center gap-4">
@@ -21,7 +23,7 @@
             </p>
             <form action="{{ route('porteiro.logout') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="bg-red-600 px-4 py-2 rounded text-white hover:bg-red-500">
+                <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">
                     Logout
                 </button>
             </form>
@@ -29,7 +31,7 @@
     </header>
 
     <div class="flex justify-start px-6 py-4">
-        <a href="/porteiro/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">
+        <a href="/porteiro-dashboard" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
             Voltar para o Dashboard
         </a>
     </div>

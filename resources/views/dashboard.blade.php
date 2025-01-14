@@ -56,6 +56,7 @@
                                 </ul>
                             </div>
                         @endif
+                        
                         <form action="{{ route('porteiros.store') }}" method="POST">
                             @csrf
                             <div class="space-y-3">
