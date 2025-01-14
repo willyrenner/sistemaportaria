@@ -76,6 +76,46 @@
         </form>
     </div>
 
+    <div id="confirmModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Solicite a redefinição de sua senha com a coordenação.</h2>
+            <div class="flex justify-end">
+                <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                    Ok
+                </button>
+                <!-- <button id="confirmCancel" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500">
+                    Cancelar
+                </button> -->
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const forgotPasswordLink = document.getElementById('link');
+        const modal = document.getElementById('confirmModal');
+        const confirmOk = document.getElementById('confirmOk');
+        const confirmCancel = document.getElementById('confirmCancel');
+
+        // Mostrar o modal ao clicar no link
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Evitar comportamento padrão do link
+            modal.classList.remove('hidden'); // Exibir o modal
+        });
+
+        // Fechar o modal ao clicar no botão "Ok"
+        confirmOk.addEventListener('click', () => {
+            modal.classList.add('hidden'); // Esconder o modal
+        });
+
+        // Fechar o modal ao clicar no botão "Cancelar"
+        confirmCancel.addEventListener('click', () => {
+            modal.classList.add('hidden'); // Esconder o modal
+        });
+    });
+</script>
