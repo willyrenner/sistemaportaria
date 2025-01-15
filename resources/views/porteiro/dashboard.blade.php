@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAINEL PORTEIRO</title>
+    <title>Painel Porteiro</title>
+    <link rel="icon" href="{{ asset('img/ifrn-logo.ico') }}" type="image/x-icon">
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -13,7 +14,7 @@
 
         <a href="/porteiro-dashboard" class="flex items-center gap-12">
             <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
-            <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+            <h1 class="text-2xl font-semibold">Sistema de Portaria - IFRN Caicó</h1>
         </a>
         <div class="flex items-center gap-4">
             <p class="text-lg">
@@ -29,7 +30,9 @@
         </div>
     </header>
 
-    <h1 class="font-semibold items-center text-xl leading-tight m-12 mt-4">Painel Porteiro</h1>
+    <div class="w-full mx-auto flex justify-center shadow text-black py-6 px-4 sm:px-6 lg:px-8">
+        <h1 class="font-semibold text-xl leading-tight text-center">Painel Porteiro</h1>
+    </div>
 
     <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
         <!-- Solicitar Aluno -->
@@ -182,7 +185,7 @@
                 </div>
             @endif
         </div>
-        
+
         <!-- Menu -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MENU</h1>

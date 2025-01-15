@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" type="imagex/png" href="imagens/ifrn-logo.ico">
-    <title>PAINEL PORTEIRO</title>
+    <title>Painel Porteiro</title>
+    <link rel="icon" href="{{ asset('img/ifrn-logo.ico') }}" type="image/x-icon">
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -14,7 +15,7 @@
 
         <a href="/porteiro-dashboard" class="flex items-center gap-12">
             <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
-            <h1 class="text-2xl font-bold">Sistema de Portaria - IFRN Caicó</h1>
+            <h1 class="text-2xl font-semibold">Sistema de Portaria - IFRN Caicó</h1>
         </a>
         <div class="flex items-center gap-4">
             <p class="text-lg">
@@ -31,7 +32,7 @@
     </header>
 
     <div class="flex flex-col w-full justify-start px-6 py-4">
-    <h1 class="font-semibold items-center text-xl leading-tight m-6">Histórico de Alunos</h1>
+    <h1 class="font-semibold items-center text-xl leading-tight mb-4">Histórico de Alunos</h1>
         <a href="/porteiro-dashboard" class="bg-green-500 w-56 text-center text-white px-4 py-2 rounded hover:bg-green-600">
             Voltar para o Dashboard
         </a>

@@ -30,6 +30,7 @@
             background-size: cover;
         }
     </style>
+    <link rel="icon" href="{{ asset('img/ifrn-logo.ico') }}" type="image/x-icon">
 </head>
 
 <body id="body" class="flex items-center justify-center min-h-screen">
