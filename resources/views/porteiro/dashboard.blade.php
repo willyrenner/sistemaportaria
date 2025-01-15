@@ -192,6 +192,7 @@
             <a href="/porteiro-visitantes" class="text-green-600 hover:underline mb-4">HISTÓRICO DE VISITANTES</a>
             <a href="/porteiro-alunos" class="text-green-600 hover:underline mb-4">HISTÓRICO DE ALUNOS</a>
             <h1 class="text-xl font-bold mb-4">BUSCAR ALUNO</h1>
+            <div id="error-message" class="bg-red-500 text-white p-4 rounded mb-4 hidden"></div>
             <div class="flex gap-2 w-full max-w-md">
                 <input type="text" id="buscarMatricula" class="border border-gray-300 rounded flex-1 px-4 py-2"
                     placeholder="INFORME A MATRICULA">
@@ -320,11 +321,6 @@
         const nome = visitorForm.querySelector('input[name="nome"]').value;
         const tipo = visitorForm.querySelector('input[name="tipo"]').value;
 
-        if (!nome) {
-            alert('Por favor, insira o nome do visitante.');
-            return;
-        }
-
         visitorConfirmMessage.textContent = `Confirmar ${tipo === 'entrada' ? 'entrada' : 'saída'} do visitante ${nome}?`;
 
         // Exibe o modal de confirmação
@@ -407,12 +403,16 @@
     async function buscarAlunoPelaMatricula() {
         const matricula = buscarMatricula.value.trim();
         if (!matricula) {
-            alert('Por favor, insira a matrícula.');
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = 'Por favor, insira a matrícula.';
+            errorDiv.classList.remove('hidden');
             return;
+        } else {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.classList.add('hidden');
         }
 
         try {
-            // Enviar requisição ao backend (ajuste a URL conforme necessário)
             const response = await fetch(`/api/alunos/${matricula}`);
             if (!response.ok) {
                 throw new Error('Aluno não encontrado.');
@@ -421,8 +421,16 @@
             const aluno = await response.json();
             abrirAlunoModal(aluno);
         } catch (error) {
-            alert(error.message);
+            // Seleciona a div de erro
+            const errorDiv = document.getElementById('error-message');
+
+            // Define a mensagem de erro
+            errorDiv.textContent = error.message;
+
+            // Remove a classe hidden para exibir a mensagem
+            errorDiv.classList.remove('hidden');
         }
+
     }
 
     // Adicionar evento ao botão de busca

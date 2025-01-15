@@ -83,17 +83,21 @@
                                     <td class="px-4 py-2 border">{{ $aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->email }}</td>
-                                    <td class="px-4 py-2 border">
+                                    <td class="px-4 py-2 border flex justify-between">
                                         <button onclick="showEditForm({{ $aluno->id }})"
                                             class="bg-yellow-500 px-4 py-2 rounded text-white hover:bg-yellow-600">Editar</button>
-                                            <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block ml-2"
+                                            <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block"
                                                 onsubmit="event.preventDefault(); confirmDelete(this, '{{ $aluno->nome}}', '{{$aluno->matricula}}');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">Excluir</button>
                                             </form>
+                                            <button onclick="copyId({{ $aluno->matricula }})"
+                                            class="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">Matrícula</button>
+                                            
                                     </td>
                                 </tr>
+                                <div id="error-message" class="bg-green-500 text-white p-4 rounded mb-4 hidden"></div>
 
                                 <tr id="edit-form-{{ $aluno->id }}" class="hidden">
                                     <td colspan="4">
@@ -162,6 +166,19 @@
         </div>
     </div>
     <script>
+        function copyId(matricula) {
+        const texto = matricula;
+        navigator.clipboard.writeText(texto).then(() => {
+            const errorDiv = document.getElementById('error-message');
+                errorDiv.textContent = `Matrícula ${texto} copiada com sucesso!`;
+                errorDiv.classList.remove('hidden');
+        }).catch(() => {
+            const errorDiv = document.getElementById('error-message');
+                errorDiv.classList.add('hidden');
+        });
+    }
+
+
     let deleteForm; // Variável para armazenar o formulário de exclusão
 
     // Exibe o modal de confirmação

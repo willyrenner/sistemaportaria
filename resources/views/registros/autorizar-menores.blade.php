@@ -113,6 +113,7 @@
         class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Confirmando ação...</h2>
+            <div id="error-message" class="bg-red-500 text-white p-4 rounded mb-4 hidden"></div>
             <div class="flex flex-col gap-4 justify-between">
                 <!-- Campo Observação -->
                 <input type="text" name="observacao_responsavel" id="observacao_responsavel" placeholder="Observação"
@@ -148,10 +149,12 @@
                 confirmOk.onclick = () => {
 
                     if (!observacaoInput.value.trim()) {
-                        alert('O campo de observação é obrigatório.');
+                        const errorDiv = document.getElementById('error-message');
+                        errorDiv.textContent = "O campo observação é obrigatório";
+                        errorDiv.classList.remove('hidden');
                         return;
                     }
-                    
+
                     confirmModal.classList.add('hidden');
 
                     // Cria um formulário temporário para enviar a requisição
