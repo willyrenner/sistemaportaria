@@ -90,7 +90,7 @@
                                     <td class="px-4 py-2 text-black border">{{ $porteiro->turno ?? 'Nenhum' }}</td>
                                     <td class="px-4 py-2 flex space-x-2 justify-start border">
                                         <!-- Botão Editar -->
-                                        <button onclick="toggleEditForm({{ $porteiro->id }})" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                        <button onclick="toggleEditForm({{ $porteiro->id }})" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                             Editar
                                         </button>
 
@@ -110,7 +110,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="submit"
-                                                class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Resetar Senha</button>
+                                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Resetar Senha</button>
                                         </form>
                                     </td>
                                 </tr>

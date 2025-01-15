@@ -52,6 +52,11 @@ class PorteiroAuthController extends Controller
             'cpf' => ['required', 'string', 'size:11', 'unique:porteiros,cpf'],
             'matricula' => ['required', 'string', 'max:20', 'unique:porteiros,matricula'],
             'turno' => ['required', 'string', 'max:20'],
+        ], [
+            'cpf.size' => 'O CPF deve ter exatamente 11 caracteres.',
+            'cpf.unique' => 'O CPF já existe no sistema.',
+            'turno.required' => 'O turno é obrigatório',
+            'matricula.unique' => 'A matrícula já existe no sistema',
         ]);
 
         // Registrar o porteiro
@@ -80,6 +85,7 @@ class PorteiroAuthController extends Controller
             'saida' => 'nullable|date', // Pode ser nulo na criação
             'motivo' => $request->tipo === 'entrada' ? 'required|string' : 'nullable|string',
         ], [
+            'cpf.size' => 'O CPF deve ter exatamente 11 caracteres.',
             'motivo.required' => 'O campo motivo é obrigatório para solicitações de entrada.',
         ]);
 
@@ -188,7 +194,7 @@ class PorteiroAuthController extends Controller
 
         $movimentacoes = RegistroSaida::with('aluno') // Relacionando os alunos
             ->orderBy('solicitacao', 'desc') // Ordenando por data de solicitação
-            ->limit(5)
+            ->limit(10)
             ->get(); // Obtendo todas as movimentações
 
         $registrosPendentes = CadastrarVisitante::whereNull('saida')

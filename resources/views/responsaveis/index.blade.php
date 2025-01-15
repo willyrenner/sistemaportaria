@@ -72,7 +72,7 @@
                                     <td class="px-4 py-2 border">{{ $responsavel->telefone }}</td>
                                     <td class="px-4 py-2 border flex space-x-2 justify-start">
                                         <button onclick="toggleEditForm({{ $responsavel->id }})"
-                                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                            class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                             Editar
                                         </button>
 

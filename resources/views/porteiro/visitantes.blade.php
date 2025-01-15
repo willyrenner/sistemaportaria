@@ -24,18 +24,19 @@
             <form action="{{ route('porteiro.logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">
-                    Logout
+                    Sair
                 </button>
             </form>
         </div>
     </header>
 
-    <div class="flex justify-start px-6 py-4">
-        <a href="/porteiro-dashboard" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+    <div class="flex flex-col w-full justify-start px-6 py-4">
+    <h1 class="font-semibold items-center text-xl leading-tight m-6">Histórico de Visitantes</h1>
+        <a href="/porteiro-dashboard" class="bg-green-500 w-56 text-center text-white px-4 py-2 rounded hover:bg-green-600">
             Voltar para o Dashboard
         </a>
     </div>
-    
+
     <div class="py-12 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-white overflow-hidden shadow-sm sm:rounded-lg p-6">
@@ -58,7 +59,8 @@
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->nome }}</td>
                                         <td class="px-4 py-2 border text-gray-800">{{ $registro->cpf }}</td>
                                         <td class="px-4 py-2 border text-gray-800">
-                                            {{ $registro->tipo ? 'Entrada' : 'Pendente' }}</td>
+                                            {{ $registro->tipo ? 'Entrada' : 'Pendente' }}
+                                        </td>
                                         <td class="px-4 py-2 border text-gray-800">
                                             {{$registro->created_at ? date('d/m/Y - H:i', strtotime($registro->created_at)) : 'Pendente'}}
                                         </td>

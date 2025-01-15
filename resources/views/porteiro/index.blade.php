@@ -24,14 +24,15 @@
             <form action="{{ route('porteiro.logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">
-                    Logout
+                    Sair
                 </button>
             </form>
         </div>
     </header>
 
-    <div class="flex justify-start px-6 py-4">
-        <a href="/porteiro-dashboard" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+    <div class="flex flex-col w-full justify-start px-6 py-4">
+    <h1 class="font-semibold items-center text-xl leading-tight m-6">Histórico de Alunos</h1>
+        <a href="/porteiro-dashboard" class="bg-green-500 w-56 text-center text-white px-4 py-2 rounded hover:bg-green-600">
             Voltar para o Dashboard
         </a>
     </div>

@@ -152,7 +152,7 @@ class RegistroSaidaController extends Controller
         // Buscando as movimentações recentes (entrada ou saída), junto com o status de autorização
         $movimentacoes = RegistroSaida::with('aluno')
             ->orderBy('solicitacao', 'desc')
-            ->limit(3)
+            ->limit(10)
             ->get();
 
         return $movimentacoes;

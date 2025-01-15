@@ -53,7 +53,8 @@
                             <input type="hidden" name="tipo" value="saida">
 
                             <!-- Botão de Enviar -->
-                            <button type="submit" class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
+                            <button type="submit"
+                                class="w-full text-white bg-green-500 px-4 py-2 rounded hover:bg-green-600">
                                 Registrar
                             </button>
                         </div>
@@ -145,6 +146,12 @@
 
                 // Confirmar ação
                 confirmOk.onclick = () => {
+
+                    if (!observacaoInput.value.trim()) {
+                        alert('O campo de observação é obrigatório.');
+                        return;
+                    }
+                    
                     confirmModal.classList.add('hidden');
 
                     // Cria um formulário temporário para enviar a requisição

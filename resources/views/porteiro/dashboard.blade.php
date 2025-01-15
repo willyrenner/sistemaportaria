@@ -23,13 +23,13 @@
             <form action="{{ route('porteiro.logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit" class="bg-red-600 px-4 py-2 rounded text-white hover:bg-red-500">
-                    Logout
+                    Sair
                 </button>
             </form>
         </div>
     </header>
 
-    <h1 class="font-semibold text-xl leading-tight m-12 mt-4">Painel Porteiro</h1>
+    <h1 class="font-semibold items-center text-xl leading-tight m-12 mt-4">Painel Porteiro</h1>
 
     <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
         <!-- Solicitar Aluno -->
@@ -109,12 +109,12 @@
         <div class="row-span-2 flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">CADASTRAR ENTRADA/SAÍDA DE VISITANTES</h1>
             <form action="{{ route('porteiro.registrarvisitante') }}" method="POST"
-                class="flex flex-col gap-4 w-full max-w-md">
+                class="flex flex-col gap-4 w-full overflow-x-auto">
                 @csrf
                 <input type="text" name="nome" class="border border-gray-300 rounded px-4 py-2" placeholder="NOME"
                     required>
-                <input type="number" name="cpf" class="border border-gray-300 rounded px-4 py-2" placeholder="CPF"
-                    required>
+                <input type="number" id="cpf" name="cpf" class="border border-gray-300 rounded px-4 py-2"
+                    placeholder="CPF" oninput="limitInputLength(this, 11)" required>
                 <input type="text" name="tipo" value="entrada" required hidden>
                 <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO"
                     minlength="5" required>
@@ -133,8 +133,14 @@
                 </div>
             @endif
 
+            @if($errors->has('cpf'))
+                <div class="text-red-600 text-sm mt-2">
+                    {{ $errors->first('cpf') }}
+                </div>
+            @endif
+
             <h1 class="text-xl font-bold mb-4 mt-4 text-center">Confirmar Saída Visitante</h1>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto w-full">
                 <table class="table-auto w-full border-collapse border border-gray-200">
                     <thead>
                         <tr class="bg-green-600 text-white">
@@ -175,8 +181,8 @@
                     {{ session('status_visitante_saida') }}
                 </div>
             @endif
-
         </div>
+        
         <!-- Menu -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg">
             <h1 class="text-xl font-bold mb-4">MENU</h1>
@@ -249,8 +255,15 @@
             </div>
         </div>
     </div>
-
 </body>
+
+<script>
+    function limitInputLength(input, maxLength) {
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength); // Limita os caracteres
+        }
+    }
+</script>
 
 <script>
     const confirmModal = document.getElementById('confirmModal');
@@ -296,6 +309,7 @@
     const visitorConfirmMessage = document.getElementById('confirmMessage');
     const visitorConfirmOk = document.getElementById('confirmOk');
     const visitorConfirmCancel = document.getElementById('confirmCancel');
+    const cpfInput = document.getElementById('cpf');
 
     visitorForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -312,6 +326,7 @@
 
         // Exibe o modal de confirmação
         visitorConfirmModal.classList.remove('hidden');
+
 
         // Confirmação
         visitorConfirmOk.onclick = () => {

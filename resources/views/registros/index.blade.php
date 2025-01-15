@@ -68,12 +68,12 @@
                                 <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                     <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
-                                    <td class="px-4 py-2 border">{{ $registro->observacao_responsavel }}</td>
+                                    <td class="px-4 py-2 border">{{ $registro->observacao_responsavel ?? 'Sem Observação' }}</td>
                                     <td class="px-4 py-2 border">
                                         {{ date('d/m/Y - H:i', strtotime($registro->solicitacao)) }}
                                     </td>
                                     <td class="px-4 py-2 border">
-                                        {{ date('d/m/Y - H:i', strtotime($registro->saida ?? 'Pendente')) }}
+                                    {{$registro->saida ? date('d/m/Y - H:i', strtotime($registro->saida)) : 'Pendente'}}
                                     </td>
                                     <td class="px-4 py-2 border">{{ $registro->motivo ?? 'N/A' }}</td>
                                     <td class="px-4 py-2 border">

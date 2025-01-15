@@ -19,7 +19,7 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h2 class="text-lg font-medium text-black dark:text-black">
                 {{ __('Tem certeza de que deseja excluir sua conta?') }}
             </h2>
 
