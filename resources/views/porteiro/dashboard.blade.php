@@ -44,7 +44,7 @@
             <form action="{{ route('registros.registrar') }}" method="POST" class="flex flex-col gap-4 w-full max-w-md">
                 @csrf
                 <input type="number" name="matricula" class="border border-gray-300 rounded px-4 py-2"
-                    placeholder="MATRICULA" required>
+                    placeholder="MATRICULA" oninput="limitInputLength(this, 14)" required>
                 <select name="tipo" class="border border-gray-300 rounded px-4 py-2" required>
                     <option value="entrada">ENTRADA</option>
                     <option value="saida">SAÍDA</option>
