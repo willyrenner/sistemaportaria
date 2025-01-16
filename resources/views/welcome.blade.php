@@ -38,8 +38,10 @@
         <div id="containerLogo">
             <img src="https://ead.ifrn.edu.br/portal/wp-content/uploads/2019/03/2000px-Logotipo_IFET.svg_-764x1024.png"
                 alt="Logo IFRN" class="w-24 mb-4" />
-            <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1>
+            <!-- <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1> -->
         </div>
+
+        <h1 class="text-xl text-center text-gray-700 font-semibold mb-6">Controle de Entrada/Saída</h1>
 
         <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Seja Bem-Vindo</h1>
 
@@ -61,7 +63,7 @@
 
         <!-- Botões de ação -->
         <a class="block w-full bg-green-600 text-white py-2 rounded text-center mb-4" id="suap-login-button">
-            Fazer Login Suap
+            Login com SUAP
         </a>
         <a class="block w-full bg-blue-600 text-white py-2 rounded text-center" href="{{ route('autenticar') }}">
             Entrar

@@ -38,10 +38,12 @@
     <div class="bg-white rounded-lg shadow-lg w-80 p-8">
         <div id="containerLogo">
             <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-24 mb-4" width="">
-            <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1>
+            <!-- <h1 id="p" class="text-center text-lg text-gray-700">Portaria - Campus Caicó</h1> -->
         </div>
 
-        <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Login</h1>
+        <h1 class="text-xl text-center text-gray-700 font-semibold mb-6">Controle de Entrada/Saída</h1>
+
+        <h1 class="text-2xl text-center text-gray-700 font-semibold mb-6">Portaria</h1>
 
         @if($errors->any())
             <div class="bg-red-500 text-white p-4 rounded mb-4">
@@ -65,15 +67,18 @@
                 class="w-full p-3 mb-6 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Senha" required>
 
+            <!-- Botão de Login -->
+            <button type="submit" id="button"
+                class="w-full bg-blue-600 text-white mb-4 p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Entrar
+            </button>
+
             <!-- Link para recuperação de senha -->
             <a href="#" id="link" class="text-sm text-blue-600 hover:underline block text-center mb-4">Esqueceu sua
                 senha?</a>
+            <a href="/" class="text-sm text-blue-600 hover:underline block text-center">Voltar</a>
 
-            <!-- Botão de Login -->
-            <button type="submit" id="button"
-                class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Entrar
-            </button>
+            
         </form>
     </div>
 

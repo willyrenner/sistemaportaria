@@ -83,7 +83,7 @@
                                     <td class="px-4 py-2 border">{{ $aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->email }}</td>
-                                    <td class="px-4 py-2 border flex justify-between">
+                                    <td class="px-4 py-2 border flex justify-around">
                                         <button onclick="showEditForm({{ $aluno->id }})"
                                             class="bg-yellow-500 px-4 py-2 rounded text-white hover:bg-yellow-600">Editar</button>
                                             <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block"
