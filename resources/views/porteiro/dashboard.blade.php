@@ -34,7 +34,7 @@
         <h1 class="font-semibold text-xl leading-tight text-center">Painel Porteiro</h1>
     </div>
 
-    <div class="grid grid-cols-3 grid-rows-auto gap-6 p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 md:p-6">
         <!-- Solicitar Aluno -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg col-span-1">
             <h1 class="text-xl font-bold mb-4">SOLICITAR ENTRADA/SAÍDA ALUNO</h1>
