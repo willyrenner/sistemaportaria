@@ -198,7 +198,7 @@
             <div id="error-message" class="bg-red-500 text-white p-4 rounded mb-4 hidden"></div>
             <div class="flex gap-2 w-full max-w-md">
                 <input type="text" id="buscarMatricula" class="border border-gray-300 rounded flex-1 px-4 py-2"
-                    placeholder="INFORME A MATRICULA">
+                    placeholder="INFORME A MATRICULA" oninput="limitInputLength(this, 14)">
                 <button id="buscarAluno"
                     class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">BUSCAR</button>
             </div>

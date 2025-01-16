@@ -28,7 +28,7 @@
                 <div id="error-message" class="bg-red-500 text-white p-4 rounded mb-4 hidden"></div>
 
                 <input type="text" id="buscarMatricula" class="border border-gray-300 rounded w-full px-4 py-2 mb-2"
-                    placeholder="INFORME A MATRICULA">
+                    placeholder="INFORME A MATRICULA" oninput="limitInputLength(this, 14)">
                 <button id="buscarAluno"
                     class="bg-green-500 w-full text-white px-4 py-2 rounded hover:bg-green-600">BUSCAR</button>
             </div>
@@ -157,7 +157,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         function limitInputLength(input, maxLength) {

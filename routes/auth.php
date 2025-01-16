@@ -12,8 +12,8 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -25,6 +25,10 @@ Route::middleware('guest')->group(function () {
     Route::get('login', function () {
         return redirect('/'); // Redireciona de "/login" para a rota "/"
     })->name('login');
+
+    Route::get('register', function () {
+        return redirect('/'); // Redireciona de "/login" para a rota "/"
+    })->name('register');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
