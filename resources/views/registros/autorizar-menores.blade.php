@@ -94,7 +94,7 @@
                                             class="autorizar-saida px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                                             data-nome="{{ $registro->aluno->nome }} ({{ $registro->aluno->matricula }})"
                                             data-registro-id="{{ $registro->id }}">
-                                            Autorizar Saída
+                                            Autorizar
                                         </button>
                                     </form>
 
