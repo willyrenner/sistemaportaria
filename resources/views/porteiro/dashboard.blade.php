@@ -39,10 +39,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 md:p-6">
         <!-- Solicitar Aluno -->
         <div class="flex flex-col items-center bg-white shadow-lg p-6 rounded-lg col-span-1">
+        <div id="error-message-aluno" class="bg-red-500 text-white p-4 rounded mb-4 hidden"></div>
             <h1 class="text-xl font-bold mb-4">SOLICITAR ENTRADA/SAÍDA ALUNO</h1>
             <form action="{{ route('registros.registrar') }}" method="POST" class="flex flex-col gap-4 w-full max-w-md">
                 @csrf
-                <input type="text" name="matricula" class="border border-gray-300 rounded px-4 py-2"
+                <input type="number" name="matricula" class="border border-gray-300 rounded px-4 py-2"
                     placeholder="MATRICULA" required>
                 <select name="tipo" class="border border-gray-300 rounded px-4 py-2" required>
                     <option value="entrada">ENTRADA</option>
@@ -309,7 +310,13 @@
                 };
             })
             .catch(error => {
-                alert('Erro: ' + error.message);
+                const errorDiv = document.getElementById('error-message-aluno');
+
+                // Define a mensagem de erro
+                errorDiv.textContent = error.message;
+
+                // Remove a classe hidden para exibir a mensagem
+                errorDiv.classList.remove('hidden');
             });
     });
 </script>
