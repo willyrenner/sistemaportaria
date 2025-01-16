@@ -119,6 +119,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/registros/novo', [RegistroSaidaController::class, 'create'])->name('registros.create');
     Route::post('/registros', [RegistroSaidaController::class, 'store'])->name('registros.store');
     Route::put('/registros/{registro}/confirmar-saida', [RegistroSaidaController::class, 'confirmarSaida'])->name('registros.confirmar-saida');
+    Route::put('/registros/{registro}/negar-saida', [RegistroSaidaController::class, 'negarSaida'])->name('registros.negar-saida');
     Route::get('/autorizar-menores', [RegistroSaidaController::class, 'autorizarSaidasMenores'])->name('autorizar-menores');
     Route::get('/registros-visitantes', [RegistroSaidaController::class, 'registros'])->name('registros.visitantes');
 });

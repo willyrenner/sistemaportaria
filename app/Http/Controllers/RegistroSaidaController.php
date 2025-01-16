@@ -147,6 +147,28 @@ class RegistroSaidaController extends Controller
         return redirect()->route('autorizar-menores')->with('success', 'Saída confirmada com sucesso!');
     }
 
+    public function negarSaida(Request $request, RegistroSaida $registro)
+    {
+        if (!$registro) {
+            return redirect()->route('autorizar-menores')->with('error', 'Registro de saída não encontrado.');
+        }
+
+        $validatedData = $request->validate([
+            'observacao_responsavel' => 'nullable|string|max:255',
+        ]);
+
+        $funcionario_id = Auth::guard('web')->user()->id;
+
+        // Atualiza a saída para o horário atual
+        $registro->saida = Carbon::now();
+        $registro->permissao = "Negada";
+        $registro->observacao_responsavel = $validatedData['observacao_responsavel'] ?? null;
+        $registro->funcionario_id = $funcionario_id;
+        $registro->save();
+
+        return redirect()->route('autorizar-menores')->with('success', 'Saída negada com sucesso!');
+    }
+
     public function movimentacoes()
     {
         // Buscando as movimentações recentes (entrada ou saída), junto com o status de autorização
