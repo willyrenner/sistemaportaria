@@ -67,6 +67,8 @@
                         <tr class="bg-green-600 text-white">
                             <th class="px-4 py-2 text-left border">Matrícula</th>
                             <th class="px-4 py-2 text-left border">Nome</th>
+                            <th class="px-4 py-2 text-left border">Responsável</th>
+                            <th class="px-4 py-2 text-left border">Telefone</th>
                             <th class="px-4 py-2 text-left border">Data de Solicitação</th>
                             <th class="px-4 py-2 text-left border">Motivo</th>
                             <th class="px-4 py-2 text-left border">Ações</th>
@@ -77,6 +79,8 @@
                             <tr class="odd:bg-gray-100 even:bg-gray-50 hover:bg-green-100">
                                 <td class="px-4 py-2 border">{{ $registro->aluno->matricula }}</td>
                                 <td class="px-4 py-2 border">{{ $registro->aluno->nome }}</td>
+                                <td class="px-4 py-2 border">{{ $registro->aluno->responsavel->nome }}</td>
+                                <td class="px-4 py-2 border">{{ $registro->aluno->responsavel->telefone }}</td>
                                 <td class="px-4 py-2 border">
                                     {{$registro->solicitacao ? date('d/m/Y - H:i', strtotime($registro->solicitacao)) : 'Pendente'}}
                                 </td>
