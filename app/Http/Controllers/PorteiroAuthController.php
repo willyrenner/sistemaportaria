@@ -285,6 +285,8 @@ class PorteiroAuthController extends Controller
     {
         $request->validate([
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'password.min' => 'A senha deve ter 8 caracteres.',
         ]);
 
         $porteiro = Auth::guard('porteiro')->user();

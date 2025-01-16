@@ -10,13 +10,15 @@
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-
-        <a href="/porteiro-dashboard" class="flex items-center gap-12">
-            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
-            <h1 class="text-2xl font-semibold">Sistema de Portaria - IFRN Caicó</h1>
+    <header class="bg-green-600 text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="/porteiro-dashboard"
+            class="flex flex-col md:flex-row items-center gap-4 md:gap-12 text-center md:text-left">
+            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12">
+            <h1 class="text-xl md:text-2xl font-semibold">
+                Sistema de Portaria - IFRN Caicó
+            </h1>
         </a>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-right">
             <p class="text-lg">
                 Porteiro:
                 <span class="font-semibold">{{ $porteiro->name }}</span>
@@ -220,6 +222,11 @@
     <div id="updatePasswordModal"
         class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            @if($errors->has('password'))
+                <div class="bg-red-500 text-white p-4 rounded mb-4">
+                    {{ $errors->first('password') }}
+                </div>
+            @endif
             <h2 class="text-2xl font-bold mb-4 text-center">Atualize sua Senha</h2>
             <form id="passwordUpdateForm" action="{{ route('porteiro.password.update.submit') }}" method="POST">
                 @csrf
