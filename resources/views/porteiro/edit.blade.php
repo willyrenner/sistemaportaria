@@ -125,7 +125,7 @@
                                                 <input type="text" name="name" value="{{ $porteiro->name }}" class="w-full px-4 py-2 rounded text-black bg-white" required>
                                                 <input type="email" name="email" value="{{ $porteiro->email }}" class="w-full px-4 py-2 rounded text-black bg-white">
                                                 <input type="number" name="cpf" value="{{ $porteiro->cpf }}" class="w-full px-4 py-2 rounded text-black bg-white" oninput="limitInputLength(this, 11)" required>
-                                                <input type="text" name="matricula" value="{{ $porteiro->matricula }}" class="w-full px-4 py-2 rounded text-black bg-white" required>
+                                                <input type="number" name="matricula" value="{{ $porteiro->matricula }}" class="w-full px-4 py-2 rounded text-black bg-white" oninput="limitInputLength(this, 14)" required>
 
                                                 <!-- Turno - Select Box com valores de turno -->
                                                 <div class="space-y-2 text-black">
