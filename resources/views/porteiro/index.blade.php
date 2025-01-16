@@ -11,20 +11,22 @@
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <header class="bg-green-600 text-white p-4 flex justify-between items-center">
-
-        <a href="/porteiro-dashboard" class="flex items-center gap-12">
-            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12" width="">
-            <h1 class="text-2xl font-semibold">Sistema de Portaria - IFRN Caicó</h1>
+    <header class="bg-green-600 text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="/porteiro-dashboard"
+            class="flex flex-col md:flex-row items-center gap-4 md:gap-12 text-center md:text-left">
+            <img src="img/ifrn-logo.png" alt="Logo IFRN" class="w-12">
+            <h1 class="text-xl md:text-2xl font-semibold">
+                Sistema de Portaria - IFRN Caicó
+            </h1>
         </a>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-right">
             <p class="text-lg">
                 Porteiro:
                 <span class="font-semibold">{{ $porteiro->name }}</span>
             </p>
             <form action="{{ route('porteiro.logout') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="bg-red-500 px-4 py-2 rounded text-white hover:bg-red-600">
+                <button type="submit" class="bg-red-600 px-4 py-2 rounded text-white hover:bg-red-500">
                     Sair
                 </button>
             </form>
@@ -32,8 +34,9 @@
     </header>
 
     <div class="flex flex-col justify-start max-w-7xl mx-auto sm:px-6 lg:px-8 py-4">
-    <h1 class="font-semibold items-center text-xl leading-tight mb-4">Histórico de Alunos</h1>
-        <a href="/porteiro-dashboard" class="bg-green-500 w-56 text-center text-white px-4 py-2 rounded hover:bg-green-600">
+        <h1 class="font-semibold items-center text-xl leading-tight mb-4">Histórico de Alunos</h1>
+        <a href="/porteiro-dashboard"
+            class="bg-green-500 w-56 text-center text-white px-4 py-2 rounded hover:bg-green-600">
             Voltar para o Dashboard
         </a>
     </div>
