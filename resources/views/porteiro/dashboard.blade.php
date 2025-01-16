@@ -52,7 +52,7 @@
                 <input type="text" name="motivo" class="border border-gray-300 rounded px-4 py-2" placeholder="MOTIVO">
 
                 @if($errors->has('motivo'))
-                    <div class="text-red-600 text-sm mt-2">
+                    <div class="bg-red-500 text-white p-4 rounded mb-4">
                         {{ $errors->first('motivo') }}
                     </div>
                 @endif
