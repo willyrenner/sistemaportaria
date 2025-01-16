@@ -87,7 +87,7 @@
                                     {{ $movimentacao->tipo == 'entrada' ? 'Entrada' : 'Saída' }}
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{ $movimentacao->permissao }}
+                                    {{ $movimentacao->permissao ? $movimentacao->permissao : 'Pendente' }}
                                 </td>
                                 <td class="px-4 py-2 border">
                                     {{$movimentacao->saida ? date('d/m/Y - H:i', strtotime($movimentacao->saida)) : 'Pendente'}}
