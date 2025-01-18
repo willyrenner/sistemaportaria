@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/alunos/{id}/editar', [AlunoController::class, 'edit'])->name('alunos.edit');
     Route::put('/alunos/{id}', [AlunoController::class, 'update'])->name('alunos.update');
     Route::delete('/alunos/{id}', [AlunoController::class, 'destroy'])->name('alunos.destroy');
+    Route::post('/alunos/import', [AlunoController::class, 'import'])->name('alunos.import');
 
     // ROTA CURSOS
     Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
@@ -113,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/responsaveis/{id}/editar', [ResponsavelController::class, 'edit'])->name('responsaveis.edit');
     Route::put('/responsaveis/{id}', [ResponsavelController::class, 'update'])->name('responsaveis.update');
     Route::delete('/responsaveis/{id}', [ResponsavelController::class, 'destroy'])->name('responsaveis.destroy');
+    Route::post('/responsaveis/import', [ResponsavelController::class, 'import'])->name('responsaveis.import');
 
     // ROTAS REGISTRO DE SAÍDAS
     Route::get('/registros', [RegistroSaidaController::class, 'index'])->name('registros.index');

@@ -30,6 +30,18 @@
                     </div>
                 @endif
 
+                <div class="bg-white text-black p-4 rounded shadow-lg mb-6">
+                    <h2 class="text-2xl font-semibold mb-4">Importar Alunos (Excel)</h2>
+                    <form action="{{ route('alunos.import') }}" class="flex justify-center items-center" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="arquivo_excel" accept=".xlsx, .xls" 
+                            class="w-full px-3 py-2 rounded text-black border mr-4" required>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Importar
+                        </button>
+                    </form>
+                </div>
+
                 <button onclick="toggleForm()" class="w-full bg-green-500 px-4 py-2 rounded mb-6 hover:bg-green-600">Novo Cadastro</button>
 
                 <div id="cadastro-aluno" class=" bg-white p-4 rounded shadow-lg mb-6 hidden">
@@ -65,9 +77,24 @@
                         </div>
                     </form>
                 </div>
+                
+
 
                 <div id="lista-alunos" class="bg-white text-black p-4 rounded shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Lista de Alunos</h2>
+                    <div class="mb-4">
+                        <form action="{{ route('alunos.index') }}" method="GET" class="flex items-center gap-2">
+                            <select name="tipo" class="w-1/4 px-3 py-2 rounded text-black border" required>
+                                <option value="nome" {{ request('tipo') == 'nome' ? 'selected' : '' }}>Nome</option>
+                                <option value="matricula" {{ request('tipo') == 'matricula' ? 'selected' : '' }}>Matrícula</option>
+                            </select>
+                            <input type="text" name="buscar" oninput="handleInputChange(this)" placeholder="Digite aqui..." value="{{ request('buscar') }}" 
+                                class="w-2/4 px-3 py-2 rounded text-black border" required>
+                            <button type="submit" class="uppercase bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">
+                                Buscar
+                            </button>
+                        </form>
+                    </div>
                     <table class="table-auto w-full border-collapse border border-gray-200">
                         <thead>
                             <tr class="bg-green-600 text-white">
@@ -212,6 +239,12 @@
         function showEditForm(id) {
             const form = document.getElementById(`edit-form-${id}`);
             form.classList.toggle('hidden');
+        }
+
+        function handleInputChange(input) {
+            if (input.value.trim() === '') {
+                input.form.submit(); // Submete o formulário automaticamente se o campo for limpo
+            }
         }
     </script>
 </x-app-layout>
