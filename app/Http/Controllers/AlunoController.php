@@ -51,8 +51,10 @@ class AlunoController extends Controller
 
             // Aplica o filtro com base no tipo selecionado
             if ($tipo === 'nome') {
-                $query->where('nome', 'like', '%' . $buscar . '%');
+                // Ajusta para buscar nomes que começam com o texto fornecido
+                $query->where('nome', 'like', $buscar . '%');
             } elseif ($tipo === 'matricula') {
+                // Deixe a lógica de matrícula como estava
                 $query->where('matricula', 'like', '%' . $buscar . '%');
             }
         }
@@ -61,7 +63,6 @@ class AlunoController extends Controller
 
         return view('alunos.index', compact('alunos', 'responsaveis', 'cursos'));
     }
-
 
     public function edit($id)
     {

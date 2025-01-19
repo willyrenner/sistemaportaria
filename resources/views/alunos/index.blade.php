@@ -32,10 +32,12 @@
 
                 <div class="bg-white text-black p-4 rounded shadow-lg mb-6">
                     <h2 class="text-2xl font-semibold mb-4">Importar Alunos (Excel)</h2>
-                    <form action="{{ route('alunos.import') }}" class="flex justify-center items-center" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('alunos.import') }}"class="flex justify-center items-center" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="file" name="arquivo_excel" accept=".xlsx, .xls" 
-                            class="w-full px-3 py-2 rounded text-black border mr-4" required>
+                        <input type="file" name="arquivo_excel"
+                            accept=".xlsx, .xls"
+                            class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
+                            file:font file:bg-green-500 file:text-white hover:file:bg-green-600" required>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                             Importar
                         </button>
@@ -49,15 +51,15 @@
                     <form action="{{ route('alunos.store') }}" method="POST">
                         @csrf
                         <div class="space-y-3">
-                            <input type="text" name="matricula" placeholder="MATRÍCULA" 
+                            <input type="text" name="matricula" placeholder="MATRÍCULA"
                                 class="w-full px-3 py-2 rounded text-black" required>
-                            <input type="text" name="nome" placeholder="NOME" 
+                            <input type="text" name="nome" placeholder="NOME"
                                 class="w-full px-3 py-2 rounded text-black" required>
-                            <input type="email" name="email" placeholder="EMAIL" 
+                            <input type="email" name="email" placeholder="EMAIL"
                                 class="w-full px-3 py-2 rounded text-black" required>
-                            <input type="text" name="telefone" placeholder="TELEFONE" 
+                            <input type="text" name="telefone" placeholder="TELEFONE"
                                 class="w-full px-3 py-2 rounded text-black" required>
-                            <input type="date" name="data_nascimento" 
+                            <input type="date" name="data_nascimento"
                                 class="w-full px-3 py-2 rounded text-black" required>
                             <select name="responsavel_id" class="w-full px-3 py-2 rounded text-black" required>
                                 <option value="">Selecione o Responsável</option>
@@ -77,8 +79,6 @@
                         </div>
                     </form>
                 </div>
-                
-
 
                 <div id="lista-alunos" class="bg-white text-black p-4 rounded shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4">Lista de Alunos</h2>
@@ -88,7 +88,8 @@
                                 <option value="nome" {{ request('tipo') == 'nome' ? 'selected' : '' }}>Nome</option>
                                 <option value="matricula" {{ request('tipo') == 'matricula' ? 'selected' : '' }}>Matrícula</option>
                             </select>
-                            <input type="text" name="buscar" oninput="handleInputChange(this)" placeholder="Digite aqui..." value="{{ request('buscar') }}" 
+                            <input type="text" name="buscar" class="flex-1 rounded border-gray-500"
+                                oninput="handleInputChange(this)" placeholder="Digite aqui ..." value="{{ request('buscar') }}"
                                 class="w-2/4 px-3 py-2 rounded text-black border" required>
                             <button type="submit" class="uppercase bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">
                                 Buscar
@@ -121,7 +122,7 @@
                                             </form>
                                             <button onclick="copyId({{ $aluno->matricula }})"
                                             class="bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">Matrícula</button>
-                                            
+
                                     </td>
                                 </tr>
                                 <div id="error-message" class="bg-green-500 text-white p-4 rounded mb-4 hidden"></div>
@@ -133,20 +134,20 @@
                                             @method('PUT')
                                             <div class="bg-white p-4 rounded shadow-lg">
                                                 <div class="space-y-3">
-                                                    <input type="text" name="matricula" value="{{ $aluno->matricula }}" 
+                                                    <input type="text" name="matricula" value="{{ $aluno->matricula }}"
                                                         class="w-full px-3 py-2 rounded text-black" required>
-                                                    <input type="text" name="nome" value="{{ $aluno->nome }}" 
+                                                    <input type="text" name="nome" value="{{ $aluno->nome }}"
                                                         class="w-full px-3 py-2 rounded text-black" required>
-                                                    <input type="email" name="email" value="{{ $aluno->email }}" 
+                                                    <input type="email" name="email" value="{{ $aluno->email }}"
                                                         class="w-full px-3 py-2 rounded text-black" required>
-                                                    <input type="text" name="telefone" value="{{ $aluno->telefone }}" 
+                                                    <input type="text" name="telefone" value="{{ $aluno->telefone }}"
                                                         class="w-full px-3 py-2 rounded text-black" required>
-                                                    <input type="date" name="data_nascimento" value="{{ $aluno->data_nascimento }}" 
+                                                    <input type="date" name="data_nascimento" value="{{ $aluno->data_nascimento }}"
                                                         class="w-full px-3 py-2 rounded text-black" required>
                                                     <select name="responsavel_id" class="w-full px-3 py-2 rounded text-black" required>
                                                         <option value="">Selecione o Responsável</option>
                                                         @foreach($responsaveis as $responsavel)
-                                                            <option value="{{ $responsavel->id }}" 
+                                                            <option value="{{ $responsavel->id }}"
                                                                 {{ $aluno->responsavel_id == $responsavel->id ? 'selected' : '' }}>
                                                                 {{ $responsavel->nome }}
                                                             </option>
@@ -155,7 +156,7 @@
                                                     <select name="curso_id" class="w-full px-3 py-2 rounded text-black" required>
                                                         <option value="">Selecione o Curso</option>
                                                         @foreach($cursos as $curso)
-                                                            <option value="{{ $curso->id }}" 
+                                                            <option value="{{ $curso->id }}"
                                                                 {{ $aluno->curso_id == $curso->id ? 'selected' : '' }}>
                                                                 {{ $curso->curso }}
                                                             </option>
