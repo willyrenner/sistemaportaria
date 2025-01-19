@@ -11,7 +11,7 @@
         </div>
     </x-slot>
 
-    <div class="py-12 min-h-screen">
+    <div class="py-8 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
                 @if(session('success'))
@@ -36,8 +36,6 @@
                 <div id="cadastro-curso" class="bg-white p-4 rounded shadow-lg mb-6 hidden">
                     <h2 class="text-2xl text-black font-semibold mb-4">CADASTRO DE CURSO</h2>
 
-
-
                     <form action="{{ route('cursos.store') }}" method="POST">
                         @csrf
                         <div class="space-y-3">
@@ -57,7 +55,7 @@
                         <thead>
                             <tr class="bg-green-600 text-white">
                                 <th class="px-4 py-2 text-left border">Nome do Curso</th>
-                                <th class="px-4 py-2 text-left border">Ações</th>
+                                <th class="px-4 py-2 text-left border w-[200px]">Ações</th>
                             </tr>
                         </thead>
                         <tbody>

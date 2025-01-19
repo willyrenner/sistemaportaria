@@ -10,7 +10,7 @@
         </div>
     </x-slot>
 
-    <div class="py-12 min-h-screen">
+    <div class="py-8 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white text-white overflow-hidden shadow-lg sm:rounded-lg p-6">
 
@@ -102,7 +102,7 @@
                                 <th class="px-4 py-2 text-left border">Matrícula</th>
                                 <th class="px-4 py-2 text-left border">Nome</th>
                                 <th class="px-4 py-2 text-left border">Email</th>
-                                <th class="px-4 py-2 text-left border">Ações</th>
+                                <th class="px-4 py-2 text-left border w-[320px]">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -111,7 +111,7 @@
                                     <td class="px-4 py-2 border">{{ $aluno->matricula }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->nome }}</td>
                                     <td class="px-4 py-2 border">{{ $aluno->email }}</td>
-                                    <td class="px-4 py-2 border flex justify-around">
+                                    <td class="px-4 py-2 border flex justify-around w-[320px]">
                                         <button onclick="showEditForm({{ $aluno->id }})"
                                             class="bg-yellow-500 px-4 py-2 rounded text-white hover:bg-yellow-600">Editar</button>
                                             <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" class="inline-block"
