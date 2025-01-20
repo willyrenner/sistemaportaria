@@ -32,13 +32,12 @@
 
                 <div class="bg-white text-black p-4 rounded shadow-lg mb-6">
                     <h2 class="text-2xl font-semibold mb-4">Importar Responsáveis (Excel)</h2>
-                    <form action="{{ route('responsaveis.import') }}" class="flex justify-center items-center" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('responsaveis.import') }}" class="flex justify-center items-center"
+                        method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- <input type="file" name="arquivo_excel" accept=".xlsx, .xls"
                             class="w-full px-3 py-2 rounded text-black border mr-4" required> -->
-                        <input type="file" name="arquivo_excel"
-                            accept=".xlsx, .xls"
-                            class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
+                        <input type="file" name="arquivo_excel" accept=".xlsx, .xls" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
                             file:font file:bg-green-500 file:text-white hover:file:bg-green-600" required>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                             Importar
@@ -152,40 +151,5 @@
         </div>
     </div>
 
-    <script>
-        let deleteForm; // Variável para armazenar o formulário de exclusão
-
-        // Exibe o modal de confirmação
-        function confirmDelete(form, responsavelNome) {
-            deleteForm = form; // Salva o formulário que será enviado
-            const modal = document.getElementById('confirmModal');
-            const message = document.getElementById('confirmMessage');
-            message.textContent = `Tem certeza de que deseja excluir o responsável ${responsavelNome}?`;
-            modal.classList.remove('hidden');
-        }
-
-        // Fecha o modal sem realizar a ação
-        document.getElementById('confirmCancel').addEventListener('click', function () {
-            const modal = document.getElementById('confirmModal');
-            modal.classList.add('hidden');
-        });
-
-        // Confirma a exclusão e envia o formulário
-        document.getElementById('confirmOk').addEventListener('click', function () {
-            if (deleteForm) {
-                deleteForm.submit(); // Submete o formulário de exclusão
-            }
-        });
-
-
-        function toggleForm() {
-            const form = document.getElementById('cadastro-responsavel');
-            form.classList.toggle('hidden');
-        }
-
-        function toggleEditForm(id) {
-            var form = document.getElementById('edit-form-' + id);
-            form.style.display = form.style.display === 'none' ? 'table-row' : 'none';
-        }
-    </script>
+    <script src="{{ asset('js/responsaveis.js') }}"></script>
 </x-app-layout>

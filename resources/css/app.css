@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+table {
+    border: none;
+    /* Remove a borda da tabela */
+    border-collapse: collapse;
+    /* Garante que não haja bordas colapsadas */
+}
+
+table th,
+table td {
+    border: none;
+    /* Remove as bordas das células */
+}

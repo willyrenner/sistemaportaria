@@ -54,7 +54,7 @@
                 </ul>
             </div>
         @endif
-        
+
         <form method="POST" action="{{ route('porteiro.login') }}">
             @csrf
             <!-- Campo de Usuário (Email ou Matrícula) -->
@@ -78,14 +78,15 @@
                 senha?</a>
             <a href="/" class="text-sm text-blue-600 hover:underline block text-center">Voltar</a>
 
-            
+
         </form>
     </div>
 
     <div id="confirmModal"
         class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden backdrop-filter backdrop-blur-sm">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Solicite a redefinição de sua senha com a coordenação.</h2>
+            <h2 class="text-xl font-bold mb-4 text-center" id="confirmMessage">Solicite a redefinição de sua senha com a
+                coordenação.</h2>
             <div class="flex justify-end">
                 <button id="confirmOk" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
                     Ok
@@ -96,32 +97,8 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const forgotPasswordLink = document.getElementById('link');
-        const modal = document.getElementById('confirmModal');
-        const confirmOk = document.getElementById('confirmOk');
-        const confirmCancel = document.getElementById('confirmCancel');
-
-        // Mostrar o modal ao clicar no link
-        forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Evitar comportamento padrão do link
-            modal.classList.remove('hidden'); // Exibir o modal
-        });
-
-        // Fechar o modal ao clicar no botão "Ok"
-        confirmOk.addEventListener('click', () => {
-            modal.classList.add('hidden'); // Esconder o modal
-        });
-
-        // Fechar o modal ao clicar no botão "Cancelar"
-        confirmCancel.addEventListener('click', () => {
-            modal.classList.add('hidden'); // Esconder o modal
-        });
-    });
-</script>
+<script src="{{ asset('js/porteiro_login.js') }}"></script>

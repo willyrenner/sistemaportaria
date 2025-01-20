@@ -90,7 +90,7 @@
                             </select>
                             <input type="text" name="buscar" class="flex-1 rounded border-gray-500"
                                 oninput="handleInputChange(this)" placeholder="Digite aqui ..." value="{{ request('buscar') }}"
-                                class="w-2/4 px-3 py-2 rounded text-black border" required>
+                                class="w-2/4 px-3 py-2 rounded text-black border">
                             <button type="submit" class="uppercase bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-600">
                                 Buscar
                             </button>
@@ -174,7 +174,6 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
             <!-- Modal de Confirmação -->
@@ -193,59 +192,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function copyId(matricula) {
-        const texto = matricula;
-        navigator.clipboard.writeText(texto).then(() => {
-            const errorDiv = document.getElementById('error-message');
-                errorDiv.textContent = `Matrícula ${texto} copiada com sucesso!`;
-                errorDiv.classList.remove('hidden');
-        }).catch(() => {
-            const errorDiv = document.getElementById('error-message');
-                errorDiv.classList.add('hidden');
-        });
-    }
-
-
-    let deleteForm; // Variável para armazenar o formulário de exclusão
-
-    // Exibe o modal de confirmação
-    function confirmDelete(form, alunoNome, alunoMatricula) {
-        deleteForm = form; // Salva o formulário que será enviado
-        const modal = document.getElementById('confirmModal');
-        const message = document.getElementById('confirmMessage');
-        message.textContent = `Tem certeza de que deseja excluir o aluno ${alunoNome} (${alunoMatricula}) ?`;
-        modal.classList.remove('hidden');
-    }
-
-    // Fecha o modal sem realizar a ação
-    document.getElementById('confirmCancel').addEventListener('click', function () {
-        const modal = document.getElementById('confirmModal');
-        modal.classList.add('hidden');
-    });
-
-    // Confirma a exclusão e envia o formulário
-    document.getElementById('confirmOk').addEventListener('click', function () {
-        if (deleteForm) {
-            deleteForm.submit(); // Submete o formulário de exclusão
-        }
-    });
-
-
-        function toggleForm() {
-            const form = document.getElementById('cadastro-aluno');
-            form.classList.toggle('hidden');
-        }
-
-        function showEditForm(id) {
-            const form = document.getElementById(`edit-form-${id}`);
-            form.classList.toggle('hidden');
-        }
-
-        function handleInputChange(input) {
-            if (input.value.trim() === '') {
-                input.form.submit(); // Submete o formulário automaticamente se o campo for limpo
-            }
-        }
-    </script>
+    <script src="{{ asset('js/alunos.js') }}"></script>
 </x-app-layout>
