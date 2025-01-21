@@ -124,6 +124,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/registros/{registro}/negar-saida', [RegistroSaidaController::class, 'negarSaida'])->name('registros.negar-saida');
     Route::get('/autorizar-menores', [RegistroSaidaController::class, 'autorizarSaidasMenores'])->name('autorizar-menores');
     Route::get('/registros-visitantes', [RegistroSaidaController::class, 'registros'])->name('registros.visitantes');
+    Route::get('/registros-todos', [RegistroSaidaController::class, 'todosRegistros'])->name('registros.todos');
+
 });
 
 

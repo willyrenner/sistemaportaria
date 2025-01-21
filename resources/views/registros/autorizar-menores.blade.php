@@ -14,6 +14,12 @@
     <div class="py-8 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-4 rounded-lg shadow-lg overflow-hidden sm:rounded-lg">
+                @if(session('status'))
+                    <div class="bg-yellow-500 text-white p-4 rounded mb-4">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 @if(session('success'))
                     <div class="bg-green-500 text-white p-4 rounded mb-4">
                         {{ session('success') }}

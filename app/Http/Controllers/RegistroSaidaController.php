@@ -8,6 +8,7 @@ use App\Models\Aluno;
 use App\Models\CadastrarVisitante;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RegistroSaidaController extends Controller
 {
@@ -16,6 +17,28 @@ class RegistroSaidaController extends Controller
         $registros = CadastrarVisitante::all();
         return view('registros.visitantes', compact('registros'));
     }
+
+    public function index() // Listagem de registros
+    {
+        $registros = RegistroSaida::with('aluno', 'funcionario')->get();
+        return view('registros.index', compact('registros'));
+    }
+
+    public function todosRegistros() 
+    {
+        $registrosAlunos = RegistroSaida::with('aluno', 'funcionario')
+            ->select('id', 'tipo', 'motivo', 'solicitacao as data', 'aluno_id', 'funcionario_id', DB::raw("'aluno' as categoria"))
+            ->get();
+
+        $registrosVisitantes = CadastrarVisitante::select('id', 'tipo', 'motivo', 'created_at as data', 'nome', 'cpf', DB::raw("'visitante' as categoria"))
+            ->get();
+
+        $registros = $registrosAlunos->merge($registrosVisitantes)
+            ->sortByDesc('data');
+
+        return view('registros.todos', compact('registros'));
+    }
+
 
     public function create()
     {
@@ -103,12 +126,6 @@ class RegistroSaidaController extends Controller
 
         // Se for entrada, não exibe mensagem
         return redirect()->back()->with('status', 'Entrada registrada com sucesso!');
-    }
-
-    public function index() // Listagem de registros
-    {
-        $registros = RegistroSaida::with('aluno', 'funcionario')->get();
-        return view('registros.index', compact('registros'));
     }
 
     public function autorizarSaidasMenores()
