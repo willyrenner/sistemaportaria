@@ -24,18 +24,44 @@ class RegistroSaidaController extends Controller
         return view('registros.index', compact('registros'));
     }
 
-    public function todosRegistros() 
+    public function todosRegistros(Request $request)
     {
-        $registrosAlunos = RegistroSaida::with('aluno', 'funcionario')
-            ->select('id', 'tipo', 'motivo', 'solicitacao as data', 'aluno_id', 'funcionario_id', DB::raw("'aluno' as categoria"))
-            ->get();
+        // Query de registros de alunos
+        $queryAlunos = RegistroSaida::with('aluno', 'funcionario')
+            ->select(
+                'id',
+                'tipo',
+                'motivo',
+                'solicitacao as data',
+                'aluno_id',
+                'funcionario_id',
+                DB::raw("'aluno' as categoria")
+            );
 
-        $registrosVisitantes = CadastrarVisitante::select('id', 'tipo', 'motivo', 'created_at as data', 'nome', 'cpf', DB::raw("'visitante' as categoria"))
-            ->get();
+        // Query de registros de visitantes
+        $queryVisitantes = CadastrarVisitante::select(
+            'id',
+            'tipo',
+            'motivo',
+            'created_at as data',
+            'nome',
+            'cpf',
+            DB::raw("'visitante' as categoria")
+        );
 
-        $registros = $registrosAlunos->merge($registrosVisitantes)
-            ->sortByDesc('data');
+        // Filtro pelo nome
+        if ($request->filled('nome')) {
+            $queryAlunos->whereHas('aluno', function ($query) use ($request) {
+                $query->where('nome', 'like', '%' . $request->nome . '%');
+            });
 
+            $queryVisitantes->where('nome', 'like', '%' . $request->nome . '%');
+        }
+
+        // Mesclando registros e ordenando
+        $registros = $queryAlunos->get()->merge($queryVisitantes->get())->sortByDesc('data');
+
+        // Retornando a view com os registros
         return view('registros.todos', compact('registros'));
     }
 

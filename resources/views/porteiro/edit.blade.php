@@ -47,11 +47,11 @@
                                     class="w-full px-3 py-2 rounded text-black" required>
                                 <input type="hidden" name="email" value="">
                                 <!-- Campo CPF -->
-                                <input type="text" name="cpf" placeholder="CPF"
-                                    class="w-full px-3 py-2 rounded text-black" required>
+                                <input type="number" name="cpf" placeholder="CPF"
+                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 11)" required>
                                 <!-- Campo Matrícula -->
-                                <input type="text" name="matricula" placeholder="MATRÍCULA"
-                                    class="w-full px-3 py-2 rounded text-black" required>
+                                <input type="number" name="matricula" placeholder="MATRÍCULA"
+                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 14)" required>
                                 <!-- Campos Fixos -->
                                 <input type="hidden" name="role" value="porteiro">
                                 <!-- Campo Turnos -->
