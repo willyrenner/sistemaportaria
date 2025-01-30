@@ -15,19 +15,25 @@ function copyId(matricula) {
 
 let deleteForm; // Variável para armazenar o formulário de exclusão
 
+// Inicializa o modal escondendo-o
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("confirmModal");
+    modal.classList.add("hidden"); // Esconde o modal no carregamento
+});
+
 // Exibe o modal de confirmação
 function confirmDelete(form, alunoNome, alunoMatricula) {
     deleteForm = form; // Salva o formulário que será enviado
     const modal = document.getElementById("confirmModal");
     const message = document.getElementById("confirmMessage");
     message.textContent = `Tem certeza de que deseja excluir o aluno ${alunoNome} (${alunoMatricula}) ?`;
-    modal.classList.remove("hidden");
+    modal.classList.remove("hidden"); // Mostra o modal
 }
 
 // Fecha o modal sem realizar a ação
 document.getElementById("confirmCancel").addEventListener("click", function () {
     const modal = document.getElementById("confirmModal");
-    modal.classList.add("hidden");
+    modal.classList.add("hidden"); // Esconde o modal
 });
 
 // Confirma a exclusão e envia o formulário

@@ -47,20 +47,6 @@
 
         <div id="local-error" class="bg-red-500 text-white p-4 rounded mb-4" hidden></div>
 
-        <script>
-            const localError = localStorage.getItem('error');
-            if (localError) {
-                const errorDiv = document.getElementById('local-error');
-
-                errorDiv.removeAttribute('hidden');
-
-                errorDiv.textContent = localError;
-
-                localStorage.removeItem('error');
-            }
-        </script>
-
-
         <!-- Botões de ação -->
         <a class="block w-full bg-green-600 text-white py-2 rounded text-center mb-4" id="suap-login-button">
             Login com SUAP
@@ -82,6 +68,14 @@
         $(document).ready(function () {
             $("#suap-login-button").attr('href', suap.getLoginURL());
         });
+
+        const localError = localStorage.getItem('error');
+        if (localError) {
+            const errorDiv = document.getElementById('local-error');
+            errorDiv.removeAttribute('hidden');
+            errorDiv.textContent = localError;
+            localStorage.removeItem('error');
+        }
     </script>
 
 </body>

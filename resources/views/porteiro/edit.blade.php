@@ -48,10 +48,12 @@
                                 <input type="hidden" name="email" value="">
                                 <!-- Campo CPF -->
                                 <input type="number" name="cpf" placeholder="CPF"
-                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 11)" required>
+                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 11)"
+                                    required>
                                 <!-- Campo Matrícula -->
                                 <input type="number" name="matricula" placeholder="MATRÍCULA"
-                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 14)" required>
+                                    class="w-full px-3 py-2 rounded text-black" oninput="limitInputLength(this, 14)"
+                                    required>
                                 <!-- Campos Fixos -->
                                 <input type="hidden" name="role" value="porteiro">
                                 <!-- Campo Turnos -->
@@ -190,14 +192,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            function limitInputLength(input, maxLength) {
-                if (input.value.length > maxLength) {
-                    input.value = input.value.slice(0, maxLength); // Limita os caracteres
-                }
-            }
-        </script>
 
         <script src="{{ asset('js/porteiros.js') }}"></script>
 </x-app-layout>

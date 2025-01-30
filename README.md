@@ -14,18 +14,23 @@
 Siga os passos abaixo para configurar e rodar o projeto:
 
 ### 1. Clonar o Repositório
+
 Faça o clone do repositório:
 
 ```bash
 git clone -b dev https://github.com/willyrenner/sistemaportaria.git
 ```
+
 ### 2. Instalar as Dependências do PHP
+
 Execute o comando para instalar as dependências do Laravel:
 
 ```bash
 composer install
 ```
+
 ### 3. Instalar as Dependências do Node.js
+
 Baixe as dependências do frontend:
 
 ```bash
@@ -33,23 +38,28 @@ npm install
 ```
 
 ### 4. Configurar o Banco de Dados
+
 Configure o arquivo .env com as informações do seu banco de dados.
 Execute as migrations para criar as tabelas:
 
 ```bash
 php artisan migrate
 ```
+
 ### 5. Rodar o Servidor do Laravel
+
 Inicie o servidor do Laravel com o comando:
 
 ```bash
 php artisan serve
 ```
+
 ### 6. Rodar o Servidor de Desenvolvimento do Frontend
+
 Compile os assets do frontend e inicie o servidor:
 
 ```bash
 npm run dev
 ```
 
-### Agora o projeto está configurado e pronto para ser usado!
+### Agora o projeto está configurado e pronto para ser usado

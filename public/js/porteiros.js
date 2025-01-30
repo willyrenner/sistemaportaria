@@ -55,3 +55,9 @@ function toggleCadastroForm() {
     var form = document.getElementById("cadastro-porteiros");
     form.classList.toggle("hidden");
 }
+
+function limitInputLength(input, maxLength) {
+    if (input.value.length > maxLength) {
+        input.value = input.value.slice(0, maxLength); // Limita os caracteres
+    }
+}
